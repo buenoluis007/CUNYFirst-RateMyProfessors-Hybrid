@@ -95,6 +95,14 @@ app.post('/logincheck', function(req, res) {
     });
 });
 
+// Sign Out
+app.post('/signout', function(req, res) {
+    signedInUser.userID = 0;
+    signedInUser.userName = "";
+    signedInUser.loggedIn = false;
+    res.redirect('/');
+});
+
 // Depends on response from html form
 app.get('/results', function(req, res) {
     var userResult = req.query.Course_Number;
