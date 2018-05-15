@@ -17,21 +17,85 @@ var connection = mysql.createConnection({
     database: 'theselectsquad'
 });
 
+
 // Check if server is working properly
 connection.connect(function(error) {
     if(!!error) {
-        console.log("error");
+        console.log("Error connecting to database");
     } else {
         console.log("Connected");
     }
 });
+
+let signedInUser = {
+    userID: '0',
+    userName: "",
+    loggedIn: false,
+};
 
 app.get('/', function(req, res) {
     res.render("searchpage");
     console.log("Someone requested The Select Squad!");
 });
 
-// Depends on response from html from
+// If logged in, redirect the user (FIX)
+app.post('/RedirectLogin', function(req, res) {
+  console.log(signedInUser.email);
+    if(signedInUser.status === true) { // If the user is already signed in and tries to access this page, redirect them
+        res.redirect('/');
+    } else {
+        res.render("/login");
+    }
+});
+
+// check the login credentials
+app.post('/logincheck', function(req, res) {
+    var email = req.body.email;
+    var password = req.body.pass;
+    console.log(email);
+    console.log(password);
+    var q = "SELECT * FROM Users WHERE email='" + email + "' && password='" + password + "'";
+    connection.query(q, function(err, results) {
+        if(err) throw err;
+        // console.log(results);
+        if(results[0]) {
+            console.log("The email and password are correct!");
+            signedInUser.userID = results[0].userID;
+            signedInUser.email = results[0].email;
+            signedInUser.type = results[0].acctType;
+            signedInUser.userID = results[0].userID;
+            signedInUser.loggedIn = true;
+            signedInUser.failed = false;
+            Manager.userID = results[0].userID;
+            console.log(signedInUser);
+            var z = "SELECT * FROM Restaurants JOIN Managers ON Restaurants.restaurantID = Managers.restaurantID WHERE Managers.userID= " + signedInUser.userID;
+            if(signedInUser.type === "Manager") {
+                connection.query(z, function(err, results) {
+                    if(err) throw err;
+                    if(results[0]){
+                        console.log(results);
+                        Manager.resID = results[0].restaurantID;
+                        Manager.resName = results[0].name;
+                        Manager.resAddress = results[0].address;
+                        console.log('the resID is ' + Manager.resID);
+                        console.log('name of rest is: ' + Manager.resName);
+                        console.log('address:' + Manager.resAddress);
+                        res.redirect('/')
+                    }
+                });
+            } else {
+                res.redirect('/');
+            }
+        } else {
+            console.log("The email or password is incorrect. Try again.");
+            signedInUser.failed = true
+            console.log(signedInUser.failed);
+            res.redirect('/login');
+        }
+    });
+});
+
+// Depends on response from html form
 app.get('/results', function(req, res) {
     var userResult = req.query.Course_Number;
     var q = "";
@@ -122,6 +186,10 @@ app.get("/results/details", function(req, res) {
         res.render("reviewTable", {results: results_json});
     });
     // console.log(classResult);
+});
+
+app.get('*', function(req, res) {
+    res.send("This is not a valid page on this website.")
 });
 
 // Message for devs to see on localhost http://127.0.0.1:8080/
