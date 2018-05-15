@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Results</title>
+        <link rel="stylesheet" href="schedule.css">
+    </head>
+    <body>
+        <h2>Results</h2>
+
+        <table>
+            <thead>
+                <tr>
+                  <th>Course Number</th>
+                  <th>Section</th>
+                  <th>Course</th>
+                  <th>Professor</th>
+                  <th>Rating</th>
+                  <th>Location and Time</th>
+                  <!-- <th>Chilly Pepper</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i = 0; i<results.length;i++) {%>
+                <tr id="<%= results[i].sec %>">
+                  <td>
+                      <form action="/results/details" method="get">
+                          <button class="buttons" type="submit" name="courseValue" value="<%= results[i].sec %>"> <%= results[i].num %> </button>
+                      </form>
+                  </td>
+                  <td>
+                      <form action="/results/details" method="get">
+                          <button class="buttons" type="submit" name="courseValue" value="<%= results[i].sec %>"> <%= results[i].sec %> </button>
+                      </form>
+                  </td>
+                  <td>
+                      <form action="/results/details" method="get">
+                          <button class="buttons" type="submit" name="courseValue" value="<%= results[i].sec %>"> <%= results[i].name %> </button>
+                      </form>
+                  </td>
+                  <td>
+                      <form action="/results/details" method="get">
+                          <button class="buttons" type="submit" name="courseValue" value="<%= results[i].sec %>"> <%= results[i].prof %> </button>
+                      </form>
+                  </td>
+                  <td>
+                      <form action="/results/details" method="get">
+                          <button class="buttons" type="submit" name="courseValue" value="<%= results[i].sec %>"> <%= results[i].rating %> </button>
+                      </form>
+                  </td>
+                  <td>
+                      <form action="/results/details" method="get">
+                          <button class="buttons" type="submit" name="courseValue" value="<%= results[i].sec %>">  <%= results[i].timeLoc %> </button>
+                      </form>
+                  </td>
+                </tr> <% } %>
+            </tbody>
+        </table>
+
+    </body>
+</html>

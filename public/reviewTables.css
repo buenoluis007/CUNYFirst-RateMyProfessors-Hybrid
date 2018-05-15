@@ -1,0 +1,25 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: lightblue;
+    border-style: groove;
+    border-color: blue;
+    margin: 0px;
+    text-align: left;
+}
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+.vl {
+  border-right: 2px solid black;
+}
+h2 {
+  padding: 10px;
+  color: white;
+  background-color: blue;
+  border-style: groove;
+  border-color: lightblue;
+  margin: 0px;
+  font-size: 20px;
+}

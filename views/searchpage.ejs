@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <!--<link href="/*inert link to schedule page here " rel="stylesheet" type="text/css">--->
+    <head>
+        <meta charset="utf-8">
+        <title>CSc Schedule Search</title>
+        <link rel="stylesheet" href="searchpage.css">
+    </head>
+    <body>
+        <h2 class = "color size" style: font-size = "40px">SEARCH FOR THE BEST COMP SCI CLASS!</h2>
+        <p class="color size" > Class Search </p>
+        <label style="font-size:20px" class = "label" >Enter Course Number:
+          <form action="/results" method="get">
+            <input  type="text" placeholder="xxx00" name="Course_Number" maxlength="5">
+            <button type = "submit" style="font-size:10px">submit</button>
+          </form>
+
+          <form action="/results" method="get">
+              <p>Click to view all classes:</p>
+              <button type="submit" name="Course_Number" value = "All">View All Classes</button>
+          </form>
+        </label>
+        <br>
+        <br>
+        <br>
+        <div class="footer">
+            <p>CSc33600 Project #1</p>
+            <p>Professor: John Connor</p>
+            <p>Brought to you by The Select Squad</p>
+        </div>
+
+
+    </body>
+</html>

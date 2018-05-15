@@ -1,0 +1,66 @@
+d, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+thead{
+  background-color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.invisible {
+    visibility: collapse;
+}
+
+body{
+  border-color: blue;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: lightblue;
+    border-style: groove;
+    border-color: blue;
+    margin: 0px;
+}
+
+h2 {
+    padding: 20px;
+    color: white;
+    background-color: blue;
+    border-style: groove;
+    border-color: lightblue;
+    margin: 0px;
+    font-size: 30px;
+}
+
+
+.buttons:nth-child(2n+1) {
+    background-color: inherit;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.buttons:nth-child(2n) {
+    background-color: inherit;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.buttons:hover {
+    color: red;
+}
+
+#message {
+    padding-left: 20px;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<style>
+  table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+      background-color: lightblue;
+      border-style: groove;
+      border-color: blue;
+      margin: 0px;
+      text-align: left;
+  }
+  tr:nth-child(even) {
+      background-color: #dddddd;
+  }
+  .vl {
+    border-right: 2px solid black;
+  }
+  h2 {
+    padding: 10px;
+    color: white;
+    background-color: blue;
+    border-style: groove;
+    border-color: lightblue;
+    margin: 0px;
+    font-size: 20px;
+  }
+</style>
+<link rel="stylesheet" href="reviewTables.css">
+  <head>
+    <meta charset="utf-8">
+    <title>Class Description</title>
+  </head>
+  <body>
+  <h2>Class Description</h2>
+  <table class = "vl" style="width:100%">
+      <tr>
+        <th class = "vl">Course Name </th>
+        <td><%= results[0].name %></td>
+
+      </tr>
+      <tr>
+        <th class = "vl">Prereqs </th>
+        <td><%= results[0].prereq %></td>
+
+      </tr>
+      <tr>
+        <th class = "vl">Credits </th>
+        <td><%= results[0].credits %></td>
+
+      </tr>
+      <tr>
+        <th class = "vl">Time and Location </th>
+        <td> <%= results[0].timeLoc %> </td>
+
+      </tr>
+      <tr>
+        <th class = "vl">Professor</th>
+        <td><%= results[0].prof %></td>
+
+      </tr>
+      <tr>
+        <th class = "vl">TA(s)</th>
+        <td>
+            <%= results[0].ta[0].tAssistant %>
+        </td>
+
+      </tr>
+      <tr>
+        <th class = "vl">Rating</th>
+        <td><%= results[0].rating %></td>
+
+      </tr>
+      <tr>
+        <th class = "vl">Difficulty</th>
+        <td><%= results[0].diff %></td>
+
+      </tr>
+      <tr>
+        <th class = "vl">Would Take Again</th>
+        <% if(results[0].wta == "N/A"){ %>
+            <td><%= results[0].wta %></td>
+        <% } else { %>
+            <td><%= results[0].wta + "%" %></td>
+        <% } %>
+
+      </tr>
+      <tr>
+        <th class = "vl">Reviews</th>
+        <td>
+            <table>
+                <% for(var i = 0; i < 3; i++) {%>
+                    <% if(results[0].reviews[i]){ %>
+                        <% if(results[0].reviews[i].profreview && i+1 < 3  && results[0].reviews[i].profreview != "No review up to date"){ %>
+                            <tr><%= results[0].reviews[i].profreview %></tr>
+                            <hr>
+                        <% } else if(results[0].reviews[i].profreview) { %>
+                            <tr><%= results[0].reviews[i].profreview %></tr>
+                        <% } %>
+                    <% } %>
+                <% } %>
+            </table>
+        </td>
+      </tr>
+      <tr>
+        <th class = "vl">Chilly Pepper</th>
+        <td><%= results[0].chilly %></td>
+
+      </tr>
+</table>
+
+  </body>
+</html>

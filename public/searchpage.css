@@ -1,0 +1,32 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: lightblue;
+    color: white;
+    text-align: center;
+    background-position: center
+}
+
+.color {
+    background-color: blue;
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-family: fantasy;
+}
+
+.size {
+    font-size: 40px;
+}
+
+.label {
+    color: blue;
+}
+
+.footer {
+    margin-left: auto;
+    margin-right: auto;
+    /* position:absolute; */
+    bottom:0;
+    color: rgb(0,0,50);
+}
