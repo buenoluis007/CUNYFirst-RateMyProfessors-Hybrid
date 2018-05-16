@@ -231,6 +231,7 @@ VALUES
 
 -- Data for Users table
 INSERT INTO users(username, password) VALUES
+('bigev01', 'cool'),
 ('buenoluis001', 'mvsl'),
 ('omarelnagdy', 'oe1'),
 ('awang001', 'pw123');

@@ -1,10 +1,11 @@
 <% include partials/header %>
-<form action="LoginPage.ejs">
   <div class="container">
     <div class = "row">
       <h1 style = "text-align:center">Welcome to SelectFirst</h1>
       <div style = "width: 30%; margin: 0 auto;">
         <div class = "form-group">
+        <form action="/logincheck" method="post">
+
           <label for="uname"><b>Username</b></label>
           <input type="text" placeholder="Enter Username" name="uname" required>
         </div>
@@ -22,8 +23,8 @@
         </div>
           <button type="button" class="cancelbtn">Cancel</button>
           <span class="psw">Forgot <a href="#">password?</a></span>
+         </form>
       </div>
     </div>
   </div>
-</form>
 <% include partials/footer %>
