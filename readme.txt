@@ -20,7 +20,7 @@ Members:
 
 4) Make sure you have "Node.JS" installed. Execute in the terminal "node app.js"
 
-5) If you connected the database correctly, the terminal should say "Connected" and not "error" If you see "error" you didn't properly edit lines 13-18 in "app.js" Go to the next step once you're successfully "Connected"
+5) If you connected the database correctly, the terminal should say "Connected" and not "Error connecting to database" If you see "Error connecting to database" you didn't properly edit lines 13-18 in "app.js" Go to the next step once you're successfully "Connected"
 
 6) Go to your internet browser and type in the address bar: "127.0.0.1:8080" or "localhost:8080" which is your computers local host on port 8080. If everything went okay, our website should load onto this page.
 
