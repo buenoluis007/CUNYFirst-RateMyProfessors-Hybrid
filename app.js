@@ -151,7 +151,7 @@ app.get('/results', function(req, res) {
 
 app.get("/results/details", function(req, res) {
     var classResult = req.query.courseValue;
-    var r = "SELECT CONCAT_WS(' ', 'CSc', courses.course_num) AS 'Course Number', courseName AS 'Course Name', section.section_id AS 'Section', description AS 'Course Description', prereqs AS 'Prereq(s)', credits AS 'Credits', CONCAT_WS(' ', prof_fname, prof_lname) AS 'Professor', ta AS 'TA(s)', CONCAT_WS(' ', building, room) AS 'Location', times AS 'Dates', prof_rating AS 'Professor's Rating', difficulty AS 'Professor's Difficulty', would_take_again AS 'Would Take Again(%)', chilly_pepper AS 'Professor's Popularity', CONCAT(SUBSTRING(reviews.review, 1, 90), '...') AS 'Review' FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON section.professors_id = professors.professors_id JOIN reviews ON reviews.professors_id = professors.professors_id WHERE section.section_id = " + classResult;
+    var r = "SELECT CONCAT_WS(' ', 'CSc', courses.course_num) AS 'CourseNumber', courseName AS 'CourseName', section.section_id AS 'Section', description AS 'CourseDescription', prereqs AS 'Prereqs', credits AS 'Credits', seats,CONCAT_WS(' ', prof_fname, prof_lname) AS 'Professor', ta AS 'TAs', CONCAT_WS(' ', building, room, times) AS 'Location_and_Time', times AS 'Dates', prof_rating AS 'ProfessorRating', difficulty AS 'ProfessorDifficulty', would_take_again AS 'Would_Take_Again', chilly_pepper AS 'ProfessorPopularity', reviews.review AS 'Reviews' FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON section.professors_id = professors.professors_id JOIN reviews ON reviews.professors_id = professors.professors_id WHERE section.section_id = " + classResult;
     connection.query(r, function(err, results) {
         if(err) throw err;
         // console.log(results);
@@ -167,7 +167,7 @@ app.get("/results/details", function(req, res) {
             }
         }
         for(var i = 0; i < results.length; i++) {
-            if(results[i].TA === "") {
+            if(results[i].TA === "None") {
                 TAs_json.push({tAssistant: results[i].TA});
                 break;
             } else {
@@ -175,19 +175,19 @@ app.get("/results/details", function(req, res) {
             }
         }
         results_json.push({
-            sec: results[0].section,
-            name: results[0].COURSE,
+            sec: results[0].Section,
+            name: results[0].CourseName,
             prof: results[0].Professor,
-            rating: results[0].Professor_Rating,
-            diff: results[0].Difficulty,
+            rating: results[0].ProfessorRating,
+            diff: results[0].ProfessorDifficulty,
             wta: results[0].Would_Take_Again,
-            prereq: results[0].prereqs,
-            credits: results[0].credits,
+            prereq: results[0].Prereqs,
+            credits: results[0].Credits,
             seat: results[0].seats,
-            chilly: results[0].Chilly_Pepper,
+            chilly: results[0].ProfessorPopularity,
             timeLoc: results[0].Location_and_Time,
-            reviews: reviews_json,
-            ta: TAs_json
+            reviews: results[0].Reviews,
+            ta: results[0].TAs
         });
         // console.log(results);
         // console.log(reviews_json);
