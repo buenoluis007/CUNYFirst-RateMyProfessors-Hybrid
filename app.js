@@ -174,7 +174,11 @@ app.get("/results/details", function(req, res) {
     // console.log(classResult);
 });
 
-
+//LOGIN PAGE
+app.get("/loginPage",function(req,res){
+  res.render("LoginPage");
+});
+//
 
 app.get('*', function(req, res) {
     res.send("This is not a valid page on this website.")
