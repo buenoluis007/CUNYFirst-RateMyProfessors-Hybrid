@@ -1,18 +1,18 @@
 body {
+    background: "https://c1.staticflickr.com/3/2775/4383358371_d8d1268efc_b.jpg"
     margin: 0px;
     padding: 0px;
-    background-color: lightblue;
-    color: white;
+    /* background-color: lightblue; */
+    color: black;
     text-align: center;
     background-position: center
 }
 
 .color {
-    background-color: blue;
-    color: white;
+    color: black;
     padding-top: 20px;
     padding-bottom: 20px;
-    font-family: fantasy;
+    font-family: 'Anton', sans-serif;;
 }
 
 .size {
@@ -29,4 +29,3 @@ body {
     /* position:absolute; */
     bottom:0;
     color: rgb(0,0,50);
-}
