@@ -115,9 +115,9 @@ app.get('/results', function(req, res) {
     } else {
         // console.log(userResult);
         if (userResult == "All") {
-            q = 'SELECT courses.section, CONCAT("CSc", course_num) AS COURSE, courseName, CONCAT_WS(" ", prof_fname, prof_lname) AS Professor, CASE WHEN prof_rating = -1 THEN "N/A" ELSE prof_rating END AS Professor_Rating, CONCAT_WS(" ", building, room, times) AS Location_and_Time FROM courses JOIN professors ON courses.professors_id = professors.id JOIN ratings ON ratings.professors_id = professors.id JOIN schedule ON courses.section = schedule.course_section ORDER BY COURSE';
+            q = "SELECT section.section_id, CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName, CONCAT_WS(" ", prof_fname, prof_lname) AS Professor, ta FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id";
         } else {
-            q = 'SELECT courses.section, CONCAT("CSc", course_num) AS COURSE, courseName, CONCAT_WS(" ", prof_fname, prof_lname) AS Professor, CASE WHEN prof_rating = -1 THEN "N/A" ELSE prof_rating END AS Professor_Rating, CONCAT_WS(" ", building, room, times) AS Location_and_Time FROM courses JOIN professors ON courses.professors_id = professors.id JOIN ratings ON ratings.professors_id = professors.id JOIN schedule ON courses.section = schedule.course_section WHERE course_num = ' + userResult + ' ORDER BY COURSE';
+            q= "SELECT section.section_id, CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName, CONCAT_WS(" ", prof_fname, prof_lname) AS Professor, ta FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id WHERE courses.course_num = " + userResult;
         }
 
         if (checkInp(userResult)) {
