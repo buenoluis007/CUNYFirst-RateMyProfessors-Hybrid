@@ -1,0 +1,25 @@
+{
+  "name": "csc33600_project2",
+  "version": "1.0.0",
+  "description": "CSc33600 Project #2\r Professor: John Connor",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buenoluis007/CSc33600_Project2.git"
+  },
+  "author": "The Select Squad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/buenoluis007/CSc33600_Project2/issues"
+  },
+  "homepage": "https://github.com/buenoluis007/CSc33600_Project2#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "mysql": "^2.15.0"
+  }
+}
