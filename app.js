@@ -56,6 +56,7 @@ app.get("/loginPage",function(req,res){
     }
 });
 //
+
 //Beginning of Shopping Cart
 var ShoppingCart = [];
 app.get("/results/shoppingcart", function(req,res){
