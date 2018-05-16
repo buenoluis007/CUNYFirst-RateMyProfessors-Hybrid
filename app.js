@@ -1,9 +1,10 @@
 // The Select Squad Project 1
 // Need to npm install --save express, mysql, ejs, and body-parser
-var express = require('express');
-var mysql = require('mysql');
-var bodyParser = require("body-parser");
-var app = express();
+const express = require('express');
+const mysql = require('mysql');
+const bodyParser = require("body-parser");
+const ejs = require('ejs');
+const app = express();
 
 // Will look for a file in local directory called "views" and for a file with ".ejs" at the end
 app.set("view engine", "ejs");
@@ -32,8 +33,9 @@ let signedInUser = {
     loggedIn: false,
 };
 
+
 app.get('/', function(req, res) {
-    res.render("searchpage");
+    res.render("searchpage",  {user: signedInUser.loggedIn});
     console.log("Someone requested The Select Squad!");
 });
 
@@ -48,34 +50,17 @@ app.post('/RedirectLogin', function(req, res) {
 });
 
 //LOGIN PAGE
-app.get("/loginPage",function(req,res){
+app.get("/loginPage",function(req, res){
     if(signedInUser.loggedIn) {
         res.redirect('/');
     } else {
-        res.render("LoginPage");
+        res.render("LoginPage", {user: signedInUser.loggedIn});
     }
-});
-//
+});// check the login credentials
 
-//Beginning of Shopping Cart
-var ShoppingCart = [];
-app.get("/results/shoppingcart", function(req,res){
-  res.render("shoppingcart",{ShoppingCart:ShoppingCart});
-  console.log(ShoppingCart);
-});
-app.post("/addCourse",function(req,res){
-  CourseAdd = req.body.addClass
-  // ShoppingCart.push(CourseAdd);
-  ShoppingCart.push(course.num);
-  console.log(course.num);
-  res.redirect("/results/shoppingcart");
-});
-//End of Shopping cart
-
-// check the login credentials
 app.post('/logincheck', function(req, res) {
-    var username = req.body.username;
-    var password = req.body.pass;
+    let username = req.body.usname;
+    let password = req.body.psw;
     console.log(username);
     console.log(password);
     var q = "SELECT * FROM users WHERE username='" + username + "' && password='" + password + "'";
@@ -103,6 +88,23 @@ app.post('/signout', function(req, res) {
     signedInUser.loggedIn = false;
     res.redirect('/');
 });
+
+
+//Beginning of Shopping Cart
+var ShoppingCart = [];
+app.get("/results/shoppingcart", function(req,res){
+  res.render("shoppingcart",{ShoppingCart:ShoppingCart});
+  console.log(ShoppingCart);
+});
+
+app.post("/addCourse",function(req,res){
+  CourseAdd = req.body.addClass
+  // ShoppingCart.push(CourseAdd);
+  ShoppingCart.push(course.num);
+  console.log(course.num);
+  res.redirect("/results/shoppingcart");
+});
+//End of Shopping cart
 
 // Depends on response from html form
 app.get('/results', function(req, res) {
