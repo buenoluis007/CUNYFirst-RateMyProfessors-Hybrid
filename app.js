@@ -115,9 +115,9 @@ app.get('/results', function(req, res) {
     } else {
         // console.log(userResult);
         if (userResult == "All") {
-            q = "SELECT section.section_id, CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName, CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id";
+            q = "SELECT section.section_id, CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName, CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, building, times FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id";
         } else {
-            q= "SELECT section.section_id, CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName, CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id WHERE courses.course_num = " + userResult;
+            q= "SELECT section.section_id, CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName, CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, building, times FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id WHERE courses.course_num = " + userResult;
         }
 
         if (checkInp(userResult)) {
