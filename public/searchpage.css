@@ -1,15 +1,14 @@
 body {
-    background: "https://c1.staticflickr.com/3/2775/4383358371_d8d1268efc_b.jpg"
     margin: 0px;
     padding: 0px;
-    /* background-color: lightblue; */
+    background-color: lightblue;
     color: black;
     text-align: center;
     background-position: center
 }
 
 .color {
-    color: black;
+    color: white;
     padding-top: 20px;
     padding-bottom: 20px;
     font-family: 'Anton', sans-serif;;
@@ -20,9 +19,8 @@ body {
 }
 
 .label {
-    color: blue;
+    color: white;
 }
-
 .footer {
     margin-left: auto;
     margin-right: auto;

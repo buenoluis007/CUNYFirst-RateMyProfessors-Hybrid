@@ -7,7 +7,7 @@ var app = express();
 
 // Will look for a file in local directory called "views" and for a file with ".ejs" at the end
 app.set("view engine", "ejs");
-// app.use(bodyParser.urlencoded({extended: true})); // Needed for post requests ie: submitting a form
+app.use(bodyParser.urlencoded({extended: true})); // Needed for post requests ie: submitting a form
 app.use(express.static(__dirname + "/public")); // Use public folder to access css
 
 var connection = mysql.createConnection({
