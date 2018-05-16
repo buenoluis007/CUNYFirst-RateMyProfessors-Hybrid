@@ -115,9 +115,9 @@ app.get('/results', function(req, res) {
     } else {
         // console.log(userResult);
         if (userResult == "All") {
-            q = "SELECT section.section_id, CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName, CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, building, times FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id";
+            q = "SELECT section.section_id AS 'Section', CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName AS 'CourseName', CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, CONCAT(building, ' ', room, ' ' , times) AS Location_and_Time FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id";
         } else {
-            q= "SELECT section.section_id, CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName, CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, building, times FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id WHERE courses.course_num = " + userResult;
+            q= "SELECT section.section_id AS 'Section', CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName AS 'CourseName', CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, CONCAT(building, ' ', room, ' ' , times) AS Location_and_Time FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id WHERE courses.course_num = " + userResult;
         }
 
         if (checkInp(userResult)) {
@@ -126,11 +126,11 @@ app.get('/results', function(req, res) {
                 var results_json = [];
                 results.forEach(function(result) {
                     results_json.push({
-                        sec: result.section,
+                        sec: result.Section,
                         num: result.COURSE,
-                        name: result.courseName,
+                        name: result.CourseName,
                         prof: result.Professor,
-                        rating: result.Professor_Rating,
+                        ta: result.ta,
                         timeLoc: result.Location_and_Time
                     });
                 });
@@ -151,7 +151,7 @@ app.get('/results', function(req, res) {
 
 app.get("/results/details", function(req, res) {
     var classResult = req.query.courseValue;
-    var r = 'SELECT section, CONCAT("CSc",course_num, " ",courseName) AS COURSE, CONCAT_WS(" ", prof_fname, prof_lname) AS Professor, IFNULL(CONCAT_WS(" ", ta_fname, ta_lname), "N/A") AS TA, CASE WHEN prof_rating = -1 THEN "N/A" ELSE prof_rating END AS Professor_Rating, CASE WHEN difficulty = -1 THEN "N/A" ELSE difficulty END AS Difficulty, CASE WHEN would_take_again = -1 THEN "N/A" ELSE would_take_again END AS Would_Take_Again, chilly_pepper AS Chilly_Pepper, review AS Review, prereqs, credits, seats, CONCAT_WS(", ", building, room, times) AS Location_and_Time FROM courses JOIN professors ON courses.professors_id = professors.id JOIN ratings ON ratings.professors_id = professors.id JOIN reviews ON reviews.professors_id = professors.id JOIN schedule ON courses.section = schedule.course_section LEFT JOIN TAs ON courses.section = TAs.course_section WHERE section = ' + classResult;
+    var r = "SELECT CONCAT_WS(' ', 'CSc', courses.course_num) AS 'Course Number', courseName AS 'Course Name', section.section_id AS 'Section', description AS 'Course Description', prereqs AS 'Prereq(s)', credits AS 'Credits', CONCAT_WS(' ', prof_fname, prof_lname) AS 'Professor', ta AS 'TA(s)', CONCAT_WS(' ', building, room) AS 'Location', times AS 'Dates', prof_rating AS 'Professor's Rating', difficulty AS 'Professor's Difficulty', would_take_again AS 'Would Take Again(%)', chilly_pepper AS 'Professor's Popularity', CONCAT(SUBSTRING(reviews.review, 1, 90), '...') AS 'Review' FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON section.professors_id = professors.professors_id JOIN reviews ON reviews.professors_id = professors.professors_id WHERE section.section_id = " + classResult;
     connection.query(r, function(err, results) {
         if(err) throw err;
         // console.log(results);
