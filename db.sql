@@ -93,6 +93,23 @@ VALUES  (10300,1,'MR4, NAC 7/117', 'TuesThur 11:00am-11:50am, Fri 9:00am-10:40am
         (22100,18,'Marshak', '410', 'TuesThurs 3:30pm-4:45pm',),
         (30100,9,'NAC', '4/125', 'TuesThurs 2:00pm-3:15pm',),
         (30100,10,'NAC', '4/125', 'TuesThurs 11:00am-12:15pm',),
+        (30400, 9, 'Baskervill', '106', 'TuesThurs 5:00pm-6:15pm', 'None'),
+        (32200, 11, 'Marshak, NAC', 'MR4, 4/156', 'MonWed 2:00pm-3:15pm, Fri 1:00pm-2:40pm', 'Isatou Sanneh'),
+        (33200, 24, 'NAC', '4/130, 7/106', 'Sa 9:00am-11:30am, Fri 9:00am-10:40am', 'Michael Iannelli'),
+        (33500, 5, 'Shepard', 'S-209', 'TuesThurs 11:00am-12:15pm', 'None'),
+        (33600, 16, 'NAC', '4/121B', 'MonWed 5:00pm-6:15pm', 'None'),
+        (33600, 25, 'Shepard', 'S-209', 'TuesThurs 2:00pm-3:15pm', 'None'),
+        (34200, 12, 'NAC', '5/150', 'MonWed 11:00am-12:15pm', 'None'),
+        (34200, 8, 'NAC', '6/114', 'TuesThurs 2:00pm-3:15pm', 'None'),
+        (34300, 8, 'NAC', '7/105', 'TuesThurs 5:00pm-7:30pm', 'None'),
+        (34300, 12, 'NAC', '5/126', 'MonWed 2:00pm-3:15pm', 'None'),
+        (34300, 13, 'NAC', '4/220C', 'TuesThurs 3:30pm-4:45pm', 'None'),
+        (41200, 34, 'NAC', '5/150', 'MonWed 9:30am-10:45am', 'None'),
+        (42000, 4, 'NAC', '4/120', 'MonWed 2:00pm-3:15pm', 'None'),
+        (44800, 14, 'NAC', '4/220C', 'MonWed 3:30pm-4:45pm', 'None'),
+        (47000, 33, 'NAC', '6/311', 'MonWed 2:00pm-3:15pm', 'None'),
+        (47100, 20, 'NAC', '6/314', 'Mon 2:00pm-4:30pm', 'None'),
+        (48000, 1, 'NAC', '4/222', 'TuTh 5:00PM - 6:15PM', 'None');
 
 
 
