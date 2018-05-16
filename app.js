@@ -2,12 +2,16 @@
 // Need to npm install --save express, mysql, ejs, and body-parser
 var express = require('express');
 var mysql = require('mysql');
-var bodyParser = require("body-parser");
+var Parser = require("body-parser");
 var app = express();
 
+app.use(Parser.urlencoded({extended: true}));
 // Will look for a file in local directory called "views" and for a file with ".ejs" at the end
 app.set("view engine", "ejs");
+<<<<<<< HEAD
 app.use(bodyParser.urlencoded({extended: true})); // Needed for post requests ie: submitting a form
+=======
+>>>>>>> 66d72a17735d861777e468ea4bd61e145a872867
 app.use(express.static(__dirname + "/public")); // Use public folder to access css
 
 var connection = mysql.createConnection({
@@ -74,8 +78,8 @@ app.post("/addCourse",function(req,res){
 
 // check the login credentials
 app.post('/logincheck', function(req, res) {
-    var username = req.body.username;
-    var password = req.body.pass;
+    var username = req.body.uname;
+    var password = req.body.psw;
     console.log(username);
     console.log(password);
     var q = "SELECT * FROM users WHERE username='" + username + "' && password='" + password + "'";
@@ -96,6 +100,7 @@ app.post('/logincheck', function(req, res) {
     });
 });
 
+
 // Sign Out
 app.post('/signout', function(req, res) {
     signedInUser.userID = 0;
@@ -114,9 +119,9 @@ app.get('/results', function(req, res) {
     } else {
         // console.log(userResult);
         if (userResult == "All") {
-            q = 'SELECT courses.section, CONCAT("CSc", course_num) AS COURSE, courseName, CONCAT_WS(" ", prof_fname, prof_lname) AS Professor, CASE WHEN prof_rating = -1 THEN "N/A" ELSE prof_rating END AS Professor_Rating, CONCAT_WS(" ", building, room, times) AS Location_and_Time FROM courses JOIN professors ON courses.professors_id = professors.id JOIN ratings ON ratings.professors_id = professors.id JOIN schedule ON courses.section = schedule.course_section ORDER BY COURSE';
+            q = "SELECT section.section_id, CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName, CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id";
         } else {
-            q = 'SELECT courses.section, CONCAT("CSc", course_num) AS COURSE, courseName, CONCAT_WS(" ", prof_fname, prof_lname) AS Professor, CASE WHEN prof_rating = -1 THEN "N/A" ELSE prof_rating END AS Professor_Rating, CONCAT_WS(" ", building, room, times) AS Location_and_Time FROM courses JOIN professors ON courses.professors_id = professors.id JOIN ratings ON ratings.professors_id = professors.id JOIN schedule ON courses.section = schedule.course_section WHERE course_num = ' + userResult + ' ORDER BY COURSE';
+            q= "SELECT section.section_id, CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName, CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id WHERE courses.course_num = " + userResult;
         }
 
         if (checkInp(userResult)) {
