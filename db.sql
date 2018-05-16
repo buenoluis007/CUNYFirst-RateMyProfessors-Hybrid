@@ -34,6 +34,7 @@ CREATE TABLE reviews (
     would_take_again int(11),
     review varchar(1000),
     created date,
+    numberOfRating INT NOT NULL DEFAULT 8,
     FOREIGN KEY(professors_id) REFERENCES professors(professors_id)
 );
 
@@ -229,6 +230,16 @@ VALUES
 (3.1, 3.6, 'Not Hot', 0, 34, 'Kaliappa\'s an OK professor at best. I feel like he could be good if he\'s more organized. He rarely responds to emails, didn\'t give us a clear syllabus and his writing skills is a mess. Expect to study from the textbook and critical thinking questions in his quizzes and test. His test and q\'s are definitely a lot diff from txtbk q\'s. Good luck', NULL),
 (0, 0, 'Not Hot', 0, 35, 'No review up to date', NULL);
 
+UPDATE reviews SET numberOfRating = 0 WHERE professors_id = 8;
+UPDATE reviews SET numberOfRating = 0 WHERE professors_id = 13;
+UPDATE reviews SET numberOfRating = 0 WHERE professors_id = 19;
+UPDATE reviews SET numberOfRating = 0 WHERE professors_id = 21;
+UPDATE reviews SET numberOfRating = 0 WHERE professors_id = 25;
+UPDATE reviews SET numberOfRating = 0 WHERE professors_id = 26;
+UPDATE reviews SET numberOfRating = 0 WHERE professors_id = 28;
+UPDATE reviews SET numberOfRating = 0 WHERE professors_id = 29;
+UPDATE reviews SET numberOfRating = 0 WHERE professors_id = 35;
+
 -- Data for Users table
 INSERT INTO users(username, password) VALUES
 ('buenoluis001', 'mvsl'),
@@ -277,3 +288,22 @@ VALUES  (10300, 1, 'Marshak', 'MR4, NAC 7/117', 'TuesThur 11:00am-11:50am, Fri 9
         (47000, 33, 'NAC', '6/311', 'MonWed 2:00pm-3:15pm', 'None'),
         (47100, 20, 'NAC', '6/314', 'Mon 2:00pm-4:30pm', 'None'),
         (48000, 1, 'NAC', '4/222', 'TuTh 5:00PM - 6:15PM', 'None');
+
+-- -------------------------- Rating Procedure --------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS rateProf //
+CREATE PROCEDURE rateProf (IN professorsID INT, IN rating INT)
+
+BEGIN
+
+    DECLARE rNum INT;
+    DECLARE rSum DECIMAL;
+
+    UPDATE professors SET prof_rating = (prof_rating + rating), numberOfRating = (numberOfRating + 1) WHERE professors_id = professorsID;
+
+    SELECT numberOfRating, prof_rating INTO rNum, rSum FROM ratings WHERE professors_id = professorsID;
+
+    UPDATE professors SET prof_rating = (rSum/rNum) WHERE professors_id = professorsID;
+
+END //
+DELIMITER ;
