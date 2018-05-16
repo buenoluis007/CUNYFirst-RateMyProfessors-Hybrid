@@ -17,7 +17,7 @@
                   <th>Section</th>
                   <th>Course</th>
                   <th>Professor</th>
-                  <th>Rating</th>
+                  <th>TA</th>
                   <th>Location and Time</th>
                   <!-- <th>Chilly Pepper</th> -->
                 </tr>
@@ -47,7 +47,7 @@
                   </td>
                   <td>
                       <form action="/results/details" method="get">
-                          <button class="buttons" type="submit" name="courseValue" value="<%= results[i].sec %>"> <%= results[i].rating %> </button>
+                          <button class="buttons" type="submit" name="courseValue" value="<%= results[i].sec %>"> <%= results[i].ta %> </button>
                       </form>
                   </td>
                   <td>
