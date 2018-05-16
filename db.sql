@@ -288,22 +288,3 @@ VALUES  (10300, 1, 'Marshak', 'MR4, NAC 7/117', 'TuesThur 11:00am-11:50am, Fri 9
         (47000, 33, 'NAC', '6/311', 'MonWed 2:00pm-3:15pm', 'None'),
         (47100, 20, 'NAC', '6/314', 'Mon 2:00pm-4:30pm', 'None'),
         (48000, 1, 'NAC', '4/222', 'TuTh 5:00PM - 6:15PM', 'None');
-
--- -------------------------- Rating Procedure --------------------------
-DELIMITER //
-DROP PROCEDURE IF EXISTS rateProf //
-CREATE PROCEDURE rateProf (IN professorsID INT, IN rating INT)
-
-BEGIN
-
-    DECLARE rNum INT;
-    DECLARE rSum DECIMAL;
-
-    UPDATE professors SET prof_rating = (prof_rating + rating), numberOfRating = (numberOfRating + 1) WHERE professors_id = professorsID;
-
-    SELECT numberOfRating, prof_rating INTO rNum, rSum FROM ratings WHERE professors_id = professorsID;
-
-    UPDATE professors SET prof_rating = (rSum/rNum) WHERE professors_id = professorsID;
-
-END //
-DELIMITER ;
