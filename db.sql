@@ -73,8 +73,8 @@ CREATE TABLE shoppingCart (
 INSERT INTO section (course_num, professors_id, building, room, times, ta)
 VALUES  (10300,1,'MR4, NAC 7/117', 'TuesThur 11:00am-11:50am, Fri 9:00am-10:40am','Bin Mu'),
         (10300,2,'MR4, NAC 7/107', 'MonWe 11:00am-11:50am.Fri 9:00am-10:40am','Amir Mohsen'),
-        (10400,3,'NAC,Sheapard', '4/220C, S-209', 'MonWe 9:00am-10:40am,We 12:00pm,1:40pm','Siyu Liao'),
-        (10400,4,'Sheapard,Marshak', 'S-210,417N', 'MonWe 4:00pm-5:40pm,We 9:00am,10:40pm','Nihal Vatandas'),
+        (10400,3,'NAC,Shepard', '4/220C, S-209', 'MonWe 9:00am-10:40am,We 12:00pm,1:40pm','Siyu Liao'),
+        (10400,4,'Shepard,Marshak', 'S-210,417N', 'MonWe 4:00pm-5:40pm,We 9:00am,10:40pm','Nihal Vatandas'),
         (10400,5,'NAC', '6/115', 'TuesThurs 2:00pm-3:40pm,Fri 1:00pm,2:40pm','Chi-Him Liu'),
         (11300,6,'Shepard', 'S-209', 'Tues 9:30am-10:45am',),
         (21000,4,'NAC', '7/231', 'MonWed 11:00am-12:15pm',),
