@@ -49,17 +49,21 @@ app.post('/RedirectLogin', function(req, res) {
 
 //LOGIN PAGE
 app.get("/loginPage",function(req,res){
-  res.render("LoginPage");
+    if(signedInUser.loggedIn) {
+        res.redirect('/');
+    } else {
+        res.render("LoginPage");
+    }
 });
 //
 
 // check the login credentials
 app.post('/logincheck', function(req, res) {
-    var email = req.body.email;
+    var username = req.body.username;
     var password = req.body.pass;
-    console.log(email);
+    console.log(username);
     console.log(password);
-    var q = "SELECT * FROM Users WHERE email='" + email + "' && password='" + password + "'";
+    var q = "SELECT * FROM users WHERE username='" + username + "' && password='" + password + "'";
     connection.query(q, function(err, results) {
         if(err) throw err;
         // console.log(results);
@@ -69,7 +73,7 @@ app.post('/logincheck', function(req, res) {
             signedInUser.userName = results[0].email;
             signedInUser.loggedIn = true;
             console.log(signedInUser);
-            res.redirect('/login');
+            res.redirect('/');
         } else {
             console.log("The email or password is incorrect. Try again.");
             signedInUser.failed = true
