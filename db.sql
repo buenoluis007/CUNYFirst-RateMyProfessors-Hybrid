@@ -228,3 +228,6 @@ VALUES
 (3.1, 3.6, 'Not Hot', 0, 34, 'Horrible...Professor is extremly nice..but what he teaches and then gives on the exams are completely different..horrible..', NULL),
 (3.1, 3.6, 'Not Hot', 0, 34, 'Kaliappa\'s an OK professor at best. I feel like he could be good if he\'s more organized. He rarely responds to emails, didn\'t give us a clear syllabus and his writing skills is a mess. Expect to study from the textbook and critical thinking questions in his quizzes and test. His test and q\'s are definitely a lot diff from txtbk q\'s. Good luck', NULL),
 (0, 0, 'Not Hot', 0, 35, 'No review up to date', NULL);
+
+INSERT INTO users(username, password) VALUES
+('buenoluis001', 'mvsl'),('omarelnagdy', 'oe1');
