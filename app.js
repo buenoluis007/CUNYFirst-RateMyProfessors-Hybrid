@@ -95,10 +95,7 @@ app.post('/logincheck', function(req, res) {
         }
     });
 });
-// app.post('/logCheck', function(req, res){
-//     var username = req.body.uname;
-//     var passwd = req.body.pass
-// });
+
 
 // Sign Out
 app.post('/signout', function(req, res) {
