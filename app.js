@@ -195,6 +195,8 @@ app.get("/results/details", function(req, res) {
     // console.log(classResult);
 });
 
+
+
 app.get('*', function(req, res) {
     res.send("This is not a valid page on this website.")
 });
