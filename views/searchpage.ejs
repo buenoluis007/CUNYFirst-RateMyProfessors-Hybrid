@@ -10,9 +10,10 @@
     </head>
     <body>
         <% include partials/navbar %>
+        <link rel="stylesheet" href="searchpage.css">
         <h2 class = "color size" style: font-size = "40px">SEARCH FOR THE BEST COMP SCI CLASS!</h2>
         <p class="color size" > Class Search </p>
-        <label style="font-size:20px" class = "label" >Enter Course Number:
+        <label style="font-size:20px" class = "label" style = "color: blue" >Enter Course Number:
           <form action="/results" method="get">
             <input  type="text" placeholder="xxx00" name="Course_Number" maxlength="5">
             <button type = "submit" style="font-size:10px">submit</button>

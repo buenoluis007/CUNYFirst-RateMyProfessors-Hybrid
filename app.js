@@ -56,6 +56,20 @@ app.get("/loginPage",function(req,res){
     }
 });
 //
+//Beginning of Shopping Cart
+var ShoppingCart = [];
+app.get("/results/shoppingcart", function(req,res){
+  res.render("shoppingcart",{ShoppingCart:ShoppingCart});
+  console.log(ShoppingCart);
+});
+app.post("/addCourse",function(req,res){
+  CourseAdd = req.body.addClass
+  // ShoppingCart.push(CourseAdd);
+  ShoppingCart.push(course.num);
+  console.log(course.num);
+  res.redirect("/results/shoppingcart");
+});
+//End of Shopping cart
 
 // check the login credentials
 app.post('/logincheck', function(req, res) {
