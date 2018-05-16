@@ -54,6 +54,7 @@ CREATE TABLE section (
     building varchar(255) DEFAULT NULL,
     room varchar(100) DEFAULT NULL,
     times varchar(255) DEFAULT NULL,
+    seats INT NOT NULL DEFAULT 30,
     ta varchar(100) NOT NULL DEFAULT 'None',
     FOREIGN KEY(course_num) REFERENCES courses(course_num),
     FOREIGN KEY(professors_id) REFERENCES professors(professors_id)
@@ -229,5 +230,8 @@ VALUES
 (3.1, 3.6, 'Not Hot', 0, 34, 'Kaliappa\'s an OK professor at best. I feel like he could be good if he\'s more organized. He rarely responds to emails, didn\'t give us a clear syllabus and his writing skills is a mess. Expect to study from the textbook and critical thinking questions in his quizzes and test. His test and q\'s are definitely a lot diff from txtbk q\'s. Good luck', NULL),
 (0, 0, 'Not Hot', 0, 35, 'No review up to date', NULL);
 
+-- Data for Users table
 INSERT INTO users(username, password) VALUES
-('buenoluis001', 'mvsl'),('omarelnagdy', 'oe1');
+('buenoluis001', 'mvsl'),
+('omarelnagdy', 'oe1'),
+('awang001', 'pw123');
