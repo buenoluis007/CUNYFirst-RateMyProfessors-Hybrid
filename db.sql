@@ -1,5 +1,8 @@
+-- The Select Squad Database 2.0
+-- run in mysql: source db.sql
+
 -- DROP DATABASE
-DROP DATABASE db;
+DROP DATABASE IF EXISTS db;
 
 -- Recreate db and use it
 CREATE DATABASE db;

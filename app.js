@@ -17,7 +17,6 @@ var connection = mysql.createConnection({
     database: 'db'
 });
 
-
 // Check if server is working properly
 connection.connect(function(error) {
     if(!!error) {
@@ -61,31 +60,10 @@ app.post('/logincheck', function(req, res) {
         if(results[0]) {
             console.log("The email and password are correct!");
             signedInUser.userID = results[0].userID;
-            signedInUser.email = results[0].email;
-            signedInUser.type = results[0].acctType;
-            signedInUser.userID = results[0].userID;
+            signedInUser.userName = results[0].email;
             signedInUser.loggedIn = true;
-            signedInUser.failed = false;
-            Manager.userID = results[0].userID;
             console.log(signedInUser);
-            var z = "SELECT * FROM Restaurants JOIN Managers ON Restaurants.restaurantID = Managers.restaurantID WHERE Managers.userID= " + signedInUser.userID;
-            if(signedInUser.type === "Manager") {
-                connection.query(z, function(err, results) {
-                    if(err) throw err;
-                    if(results[0]){
-                        console.log(results);
-                        Manager.resID = results[0].restaurantID;
-                        Manager.resName = results[0].name;
-                        Manager.resAddress = results[0].address;
-                        console.log('the resID is ' + Manager.resID);
-                        console.log('name of rest is: ' + Manager.resName);
-                        console.log('address:' + Manager.resAddress);
-                        res.redirect('/')
-                    }
-                });
-            } else {
-                res.redirect('/');
-            }
+            res.redirect('/login');
         } else {
             console.log("The email or password is incorrect. Try again.");
             signedInUser.failed = true
@@ -195,6 +173,12 @@ app.get("/results/details", function(req, res) {
     });
     // console.log(classResult);
 });
+
+//LOGIN PAGE
+app.get("/loginPage",function(req,res){
+  res.render("LoginPage");
+});
+//
 
 app.get('*', function(req, res) {
     res.send("This is not a valid page on this website.")
