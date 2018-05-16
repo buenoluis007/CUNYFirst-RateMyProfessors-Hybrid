@@ -84,15 +84,13 @@ app.post('/logincheck', function(req, res) {
         // console.log(results);
         if(results[0]) {
             console.log("The email and password are correct!");
-            signedInUser.userID = results[0].userID;
-            signedInUser.userName = results[0].email;
+            signedInUser.userID = results[0].users_id;
+            signedInUser.userName = results[0].username;
             signedInUser.loggedIn = true;
             console.log(signedInUser);
             res.redirect('/');
         } else {
             console.log("The email or password is incorrect. Try again.");
-            signedInUser.failed = true
-            console.log(signedInUser.failed);
             res.redirect('/login');
         }
     });
