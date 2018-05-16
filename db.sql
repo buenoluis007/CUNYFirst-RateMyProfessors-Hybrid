@@ -1,3 +1,6 @@
+-- The Select Squad Database 2.0
+-- run in mysql: source db.sql
+
 -- DROP DATABASE
 DROP DATABASE db;
 
@@ -97,7 +100,7 @@ VALUES
 
 
 -- Data for professors table
-INSERT INTO professors (professors_id, prof_fname, prof_lname)
+INSERT INTO professors (prof_fname, prof_lname)
 VALUES
 ('William', 'Skeith'),
 ('Jeffrey', 'Gitlin'),
