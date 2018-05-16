@@ -47,6 +47,12 @@ app.post('/RedirectLogin', function(req, res) {
     }
 });
 
+//LOGIN PAGE
+app.get("/loginPage",function(req,res){
+  res.render("LoginPage");
+});
+//
+
 // check the login credentials
 app.post('/logincheck', function(req, res) {
     var email = req.body.email;
@@ -174,11 +180,7 @@ app.get("/results/details", function(req, res) {
     // console.log(classResult);
 });
 
-//LOGIN PAGE
-app.get("/loginPage",function(req,res){
-  res.render("LoginPage");
-});
-//
+
 
 app.get('*', function(req, res) {
     res.send("This is not a valid page on this website.")
