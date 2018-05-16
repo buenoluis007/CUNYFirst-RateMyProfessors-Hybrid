@@ -70,50 +70,6 @@ CREATE TABLE shoppingCart (
 
 -- ----------------------------- Inserting Data Into the Tables -----------------------------
 
-INSERT INTO section (course_num, professors_id, building, room, times, ta)
-VALUES  (10300,1,'MR4, NAC 7/117', 'TuesThur 11:00am-11:50am, Fri 9:00am-10:40am','Bin Mu'),
-        (10300,2,'MR4, NAC 7/107', 'MonWe 11:00am-11:50am.Fri 9:00am-10:40am','Amir Mohsen'),
-        (10400,3,'NAC,Sheapard', '4/220C, S-209', 'MonWe 9:00am-10:40am,We 12:00pm,1:40pm','Siyu Liao'),
-        (10400,4,'Sheapard,Marshak', 'S-210,417N', 'MonWe 4:00pm-5:40pm,We 9:00am,10:40pm','Nihal Vatandas'),
-        (10400,5,'NAC', '6/115', 'TuesThurs 2:00pm-3:40pm,Fri 1:00pm,2:40pm','Chi-Him Liu'),
-        (11300,6,'Shepard', 'S-209', 'Tues 9:30am-10:45am',),
-        (21000,4,'NAC', '7/231', 'MonWed 11:00am-12:15pm',),
-        (21100,7,'NAC', '7/225', 'MonWed 2:00PM-3:15pm,MonWed 3:30pm-4:20pm',),
-        (21100,8,'NAC', '4/113', 'TuesThurs 11:00am-12:15pm',),
-        (21200,17,'Shepard', 'S-209', 'MonWed 10:00pm-11:40am',),
-        (21200,20,'Shepard', 'S-209', 'MonWed 2:00pm-3:40pm',),
-        (21200,18,'NAC', '6/112', 'TuesThurs 10:00am-11:40am',),
-        (21200,19,'Shepard', 'S-203', 'TuesThurs 2:00pm-3:40pm',),
-        (21700,21,'NAC', '5/102', 'TuesFri 3:30pm-4:45pm',)
-        (21700,10,'NAC', '5/126', 'TuesThurs 2:00pm-3:15pm',),
-        (22000,21,'NAC', '5/126', 'TuesThurs 11:00am-12:15pm',),
-        (22000,6,'NAC', '7/306', 'MonWe 12:30am-1:45pm',),
-        (22000,3,'NAC', '7/6113', 'TuesFri 11:00am-12:15pm',),
-        (22100,15,'Shepard', 'S-21', 'MonWed 3:30am-4:45pm',),
-        (22100,22,'NAC', '5/150', 'TuesThurs 2:00pm-3:15pm',),
-        (22100,18,'Marshak', '410', 'TuesThurs 3:30pm-4:45pm',),
-        (30100,9,'NAC', '4/125', 'TuesThurs 2:00pm-3:15pm',),
-        (30100,10,'NAC', '4/125', 'TuesThurs 11:00am-12:15pm',),
-        (30400, 9, 'Baskervill', '106', 'TuesThurs 5:00pm-6:15pm', 'None'),
-        (32200, 11, 'Marshak, NAC', 'MR4, 4/156', 'MonWed 2:00pm-3:15pm, Fri 1:00pm-2:40pm', 'Isatou Sanneh'),
-        (33200, 24, 'NAC', '4/130, 7/106', 'Sa 9:00am-11:30am, Fri 9:00am-10:40am', 'Michael Iannelli'),
-        (33500, 5, 'Shepard', 'S-209', 'TuesThurs 11:00am-12:15pm', 'None'),
-        (33600, 16, 'NAC', '4/121B', 'MonWed 5:00pm-6:15pm', 'None'),
-        (33600, 25, 'Shepard', 'S-209', 'TuesThurs 2:00pm-3:15pm', 'None'),
-        (34200, 12, 'NAC', '5/150', 'MonWed 11:00am-12:15pm', 'None'),
-        (34200, 8, 'NAC', '6/114', 'TuesThurs 2:00pm-3:15pm', 'None'),
-        (34300, 8, 'NAC', '7/105', 'TuesThurs 5:00pm-7:30pm', 'None'),
-        (34300, 12, 'NAC', '5/126', 'MonWed 2:00pm-3:15pm', 'None'),
-        (34300, 13, 'NAC', '4/220C', 'TuesThurs 3:30pm-4:45pm', 'None'),
-        (41200, 34, 'NAC', '5/150', 'MonWed 9:30am-10:45am', 'None'),
-        (42000, 4, 'NAC', '4/120', 'MonWed 2:00pm-3:15pm', 'None'),
-        (44800, 14, 'NAC', '4/220C', 'MonWed 3:30pm-4:45pm', 'None'),
-        (47000, 33, 'NAC', '6/311', 'MonWed 2:00pm-3:15pm', 'None'),
-        (47100, 20, 'NAC', '6/314', 'Mon 2:00pm-4:30pm', 'None'),
-        (48000, 1, 'NAC', '4/222', 'TuTh 5:00PM - 6:15PM', 'None');
-
-
-
 -- Data for courses table
 INSERT INTO courses(course_num, courseName, description, credits, prereqs)
 VALUES
@@ -278,3 +234,46 @@ INSERT INTO users(username, password) VALUES
 ('buenoluis001', 'mvsl'),
 ('omarelnagdy', 'oe1'),
 ('awang001', 'pw123');
+
+-- Data for Sections
+INSERT INTO section (course_num, professors_id, building, room, times, ta)
+VALUES  (10300, 1, 'Marshak', 'MR4, NAC 7/117', 'TuesThur 11:00am-11:50am, Fri 9:00am-10:40am','Bin Mu'),
+        (10300, 2, 'Marshak', 'MR4, NAC 7/107', 'MonWe 11:00am-11:50am.Fri 9:00am-10:40am','Amir Mohsen'),
+        (10400, 3, 'NAC,Sheapard', '4/220C, S-209', 'MonWe 9:00am-10:40am,We 12:00pm,1:40pm','Siyu Liao'),
+        (10400, 4, 'Sheapard,Marshak', 'S-210,417N', 'MonWe 4:00pm-5:40pm,We 9:00am,10:40pm','Nihal Vatandas'),
+        (10400, 5, 'NAC', '6/115', 'TuesThurs 2:00pm-3:40pm,Fri 1:00pm,2:40pm','Chi-Him Liu'),
+        (11300, 6, 'Shepard', 'S-209', 'Tues 9:30am-10:45am', 'None'),
+        (21000, 4, 'NAC', '7/231', 'MonWed 11:00am-12:15pm', 'None'),
+        (21100, 7, 'NAC', '7/225', 'MonWed 2:00PM-3:15pm,MonWed 3:30pm-4:20pm', 'None'),
+        (21100, 8, 'NAC', '4/113', 'TuesThurs 11:00am-12:15pm', 'None'),
+        (21200, 17, 'Shepard', 'S-209', 'MonWed 10:00pm-11:40am', 'None'),
+        (21200, 20, 'Shepard', 'S-209', 'MonWed 2:00pm-3:40pm', 'None'),
+        (21200, 18, 'NAC', '6/112', 'TuesThurs 10:00am-11:40am', 'None'),
+        (21200, 19, 'Shepard', 'S-203', 'TuesThurs 2:00pm-3:40pm', 'None'),
+        (21700, 21, 'NAC', '5/102', 'TuesFri 3:30pm-4:45pm', 'None'),
+        (21700, 10, 'NAC', '5/126', 'TuesThurs 2:00pm-3:15pm', 'None'),
+        (22000, 21, 'NAC', '5/126', 'TuesThurs 11:00am-12:15pm', 'None'),
+        (22000, 6, 'NAC', '7/306', 'MonWe 12:30am-1:45pm', 'None'),
+        (22000, 3, 'NAC', '7/6113', 'TuesFri 11:00am-12:15pm', 'None'),
+        (22100, 15, 'Shepard', 'S-21', 'MonWed 3:30am-4:45pm', 'None'),
+        (22100, 22, 'NAC', '5/150', 'TuesThurs 2:00pm-3:15pm', 'None'),
+        (22100, 18, 'Marshak', '410', 'TuesThurs 3:30pm-4:45pm', 'None'),
+        (30100, 9, 'NAC', '4/125', 'TuesThurs 2:00pm-3:15pm', 'None'),
+        (30100, 10, 'NAC', '4/125', 'TuesThurs 11:00am-12:15pm', 'None'),
+        (30400, 9, 'Baskervill', '106', 'TuesThurs 5:00pm-6:15pm', 'None'),
+        (32200, 11, 'Marshak, NAC', 'MR4, 4/156', 'MonWed 2:00pm-3:15pm, Fri 1:00pm-2:40pm', 'Isatou Sanneh'),
+        (33200, 24, 'NAC', '4/130, 7/106', 'Sa 9:00am-11:30am, Fri 9:00am-10:40am', 'Michael Iannelli'),
+        (33500, 5, 'Shepard', 'S-209', 'TuesThurs 11:00am-12:15pm', 'None'),
+        (33600, 16, 'NAC', '4/121B', 'MonWed 5:00pm-6:15pm', 'None'),
+        (33600, 25, 'Shepard', 'S-209', 'TuesThurs 2:00pm-3:15pm', 'None'),
+        (34200, 12, 'NAC', '5/150', 'MonWed 11:00am-12:15pm', 'None'),
+        (34200, 8, 'NAC', '6/114', 'TuesThurs 2:00pm-3:15pm', 'None'),
+        (34300, 8, 'NAC', '7/105', 'TuesThurs 5:00pm-7:30pm', 'None'),
+        (34300, 12, 'NAC', '5/126', 'MonWed 2:00pm-3:15pm', 'None'),
+        (34300, 13, 'NAC', '4/220C', 'TuesThurs 3:30pm-4:45pm', 'None'),
+        (41200, 34, 'NAC', '5/150', 'MonWed 9:30am-10:45am', 'None'),
+        (42000, 4, 'NAC', '4/120', 'MonWed 2:00pm-3:15pm', 'None'),
+        (44800, 14, 'NAC', '4/220C', 'MonWed 3:30pm-4:45pm', 'None'),
+        (47000, 33, 'NAC', '6/311', 'MonWed 2:00pm-3:15pm', 'None'),
+        (47100, 20, 'NAC', '6/314', 'Mon 2:00pm-4:30pm', 'None'),
+        (48000, 1, 'NAC', '4/222', 'TuTh 5:00PM - 6:15PM', 'None');
