@@ -17,7 +17,6 @@ var connection = mysql.createConnection({
     database: 'db'
 });
 
-
 // Check if server is working properly
 connection.connect(function(error) {
     if(!!error) {
