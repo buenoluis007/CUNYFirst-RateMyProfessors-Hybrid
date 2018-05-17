@@ -58,16 +58,30 @@ app.get("/loginPage",function(req,res){
 //
 
 //Beginning of Shopping Cart
-var ShoppingCart = [];
 app.get("/results/shoppingcart", function(req,res){
+  var ShoppingCart = [];
   res.render("shoppingcart",{ShoppingCart:ShoppingCart});
   console.log(ShoppingCart);
+  connection.query(q,function(err,results){
+    // for(var i = 0; i < results.length; i++) {
+    //     if(results[i].Review === "No review up to date") {
+    //         reviews_json.push({profreview: results[i].Review});
+    //         break;
+    //     } else {
+    //         reviews_json.push({profreview: results[i].Review});
+    //     }
+    // }
+  });
 });
 app.post("/addCourse",function(req,res){
-  CourseAdd = req.body.addClass
-  // ShoppingCart.push(CourseAdd);
-  ShoppingCart.push(course.num);
-  console.log(course.num);
+  CourseAdd = req.body.addClass;
+  ShoppingCart.push(CourseAdd);
+  console.log(CourseAdd);
+  var q = "INSERT INTO shoppingCart(user_id,section_id) VALUES (" + signedInUser.userID+" , " + CourseAdd + ");"
+  connection.query(q,function(err,results){
+    if (err) throw err;
+    console.log(results[0]);
+  });
   res.redirect("/results/shoppingcart");
 });
 //End of Shopping cart
