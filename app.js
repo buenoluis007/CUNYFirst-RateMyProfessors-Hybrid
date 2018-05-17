@@ -32,9 +32,22 @@ let signedInUser = {
     loggedIn: false,
 };
 
+// Home Login Page
 app.get('/', function(req, res) {
-    res.render("searchpage");
-    console.log("Someone requested The Select Squad!");
+    if(signedInUser.loggedIn) {
+        res.redirect('/search');
+    } else {
+        res.render("LoginPage");
+    }
+});
+
+// Search Page
+app.get('/search', function(req, res) {
+    if(signedInUser.loggedIn) {
+        res.render("searchpage");
+    } else {
+        res.redirect('/');
+    }
 });
 
 // If logged in, redirect the user (FIX)
@@ -47,24 +60,19 @@ app.post('/RedirectLogin', function(req, res) {
     }
 });
 
-//LOGIN PAGE
-app.get("/loginPage",function(req,res){
-    if(signedInUser.loggedIn) {
-        res.redirect('/');
-    } else {
-        res.render("LoginPage");
-    }
-});
-//
-
 //Beginning of Shopping Cart
 app.get("/results/shoppingcart", function(req,res){
-  var q  = "SELECT * FROM section JOIN enrolled WHERE section.section_id = enrolled.section_id AND user_id = " + signedInUser.userID ;
-  connection.query(q,function(err,results){
-      console.log(results)
-      var ShoppingCart = results;
-      res.render("shoppingcart",{ShoppingCart:ShoppingCart});
-  });
+    if(signedInUser.loggedIn) {
+        var q  = "SELECT * FROM section JOIN enrolled WHERE section.section_id = enrolled.section_id AND user_id = " + signedInUser.userID ;
+        connection.query(q,function(err,results){
+            console.log(results)
+            var ShoppingCart = results;
+            res.render("shoppingcart",{ShoppingCart:ShoppingCart});
+        });
+    } else {
+        res.redirect('/');
+    }
+
 });
 
 app.post("/addCourse",function(req,res){
@@ -118,90 +126,97 @@ app.post('/signout', function(req, res) {
 
 // Depends on response from html form
 app.get('/results', function(req, res) {
-    var userResult = req.query.Course_Number;
-    var q = "";
-    if (!userResult) {
-        console.log("You inputted nothing!");
-        res.redirect('/');
-    } else {
-        // console.log(userResult);
-        if (userResult == "All") {
-            q = "SELECT section.section_id AS 'Section', CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName AS 'CourseName', CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, CONCAT(building, ' ', room, ' ' , times) AS Location_and_Time FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id";
-        } else {
-            q= "SELECT section.section_id AS 'Section', CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName AS 'CourseName', CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, CONCAT_WS(' ', building, room, times) AS Location_and_Time FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id WHERE courses.course_num = " + userResult;
-        }
-
-        if (checkInp(userResult)) {
-            connection.query(q, function(err, results) {
-                if(err) throw err;
-                var results_json = [];
-                results.forEach(function(result) {
-                    results_json.push({
-                        sec: result.Section,
-                        num: result.COURSE,
-                        name: result.CourseName,
-                        prof: result.Professor,
-                        ta: result.ta,
-                        timeLoc: result.Location_and_Time
-                    });
-                });
-                // Uses views/orders.ejs
-                // console.log(results_json);
-                res.render("schedule", {results: results_json});
-            });
-        } else {
-            console.log("Invalid input! Format: 'xxx00' where x is an number");
-            // alert("Must input numbers!");
+    if(signedInUser.loggedIn) {
+        var userResult = req.query.Course_Number;
+        var q = "";
+        if (!userResult) {
+            console.log("You inputted nothing!");
             res.redirect('/');
+        } else {
+            // console.log(userResult);
+            if (userResult == "All") {
+                q = "SELECT section.section_id AS 'Section', CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName AS 'CourseName', CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, CONCAT(building, ' ', room, ' ' , times) AS Location_and_Time FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id";
+            } else {
+                q= "SELECT section.section_id AS 'Section', CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName AS 'CourseName', CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, CONCAT_WS(' ', building, room, times) AS Location_and_Time FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id WHERE courses.course_num = " + userResult;
+            }
+
+            if (checkInp(userResult)) {
+                connection.query(q, function(err, results) {
+                    if(err) throw err;
+                    var results_json = [];
+                    results.forEach(function(result) {
+                        results_json.push({
+                            sec: result.Section,
+                            num: result.COURSE,
+                            name: result.CourseName,
+                            prof: result.Professor,
+                            ta: result.ta,
+                            timeLoc: result.Location_and_Time
+                        });
+                    });
+                    // Uses views/orders.ejs
+                    // console.log(results_json);
+                    res.render("schedule", {results: results_json});
+                });
+            } else {
+                console.log("Invalid input! Format: 'xxx00' where x is an number");
+                // alert("Must input numbers!");
+                res.redirect('/');
+            }
         }
+        // console.log("Someone requested The Select Squad!");
+    } else {
+        res.redirect('/');
     }
 
-
-    // console.log("Someone requested The Select Squad!");
 });
 
 app.get("/results/details", function(req, res) {
-    var classResult = req.query.courseValue;
+    if(signedInUser.loggedIn) {
+        var classResult = req.query.courseValue;
 
-    var r = "SELECT CONCAT_WS(' ', 'CSc', courses.course_num) AS 'CourseNumber', courseName AS 'CourseName', section.section_id AS 'Section', description AS 'CourseDescription', prereqs AS 'Prereqs', credits AS 'Credits', seats,CONCAT_WS(' ', prof_fname, prof_lname) AS 'Professor', ta AS 'TAs', CONCAT_WS(' ', building, room, times) AS 'Location_and_Time', times AS 'Dates', prof_rating AS 'ProfessorRating', difficulty AS 'ProfessorDifficulty', would_take_again AS 'Would_Take_Again', chilly_pepper AS 'ProfessorPopularity', reviews.review AS 'Reviews', professors.professors_id AS 'professors_id' FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON section.professors_id = professors.professors_id JOIN reviews ON reviews.professors_id = professors.professors_id WHERE section.section_id = " + classResult;
+        var r = "SELECT CONCAT_WS(' ', 'CSc', courses.course_num) AS 'CourseNumber', courseName AS 'CourseName', section.section_id AS 'Section', description AS 'CourseDescription', prereqs AS 'Prereqs', credits AS 'Credits', seats,CONCAT_WS(' ', prof_fname, prof_lname) AS 'Professor', ta AS 'TAs', CONCAT_WS(' ', building, room, times) AS 'Location_and_Time', times AS 'Dates', prof_rating AS 'ProfessorRating', difficulty AS 'ProfessorDifficulty', would_take_again AS 'Would_Take_Again', chilly_pepper AS 'ProfessorPopularity', reviews.review AS 'Reviews', professors.professors_id AS 'professors_id' FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON section.professors_id = professors.professors_id JOIN reviews ON reviews.professors_id = professors.professors_id WHERE section.section_id = " + classResult;
 
-    connection.query(r, function(err, results) {
-        if(err) throw err;
-        // console.log(results);
-        var reviews_json = [];
-        var results_json = [];
-        for(var i = 0; i < results.length; i++) {
-            if(results[i].Reviews === "No review up to date") {
-                reviews_json.push({profreview: results[i].Reviews});
-                break;
-            } else {
+        connection.query(r, function(err, results) {
+            if(err) throw err;
+            // console.log(results);
+            var reviews_json = [];
+            var results_json = [];
+            for(var i = 0; i < results.length; i++) {
+                if(results[i].Reviews === "No review up to date") {
+                    reviews_json.push({profreview: results[i].Reviews});
+                    break;
+                } else {
 
-                reviews_json.push({profreview: results[i].Reviews});
+                    reviews_json.push({profreview: results[i].Reviews});
+                }
             }
-        }
-        results_json.push({
-            profID: results[0].professors_id,
-            sec: results[0].Section,
-            name: results[0].CourseName,
-            prof: results[0].Professor,
-            rating: results[0].ProfessorRating,
-            diff: results[0].ProfessorDifficulty,
-            wta: results[0].Would_Take_Again,
-            prereq: results[0].Prereqs,
-            credits: results[0].Credits,
-            seat: results[0].seats,
-            chilly: results[0].ProfessorPopularity,
-            timeLoc: results[0].Location_and_Time,
-            reviews: reviews_json,
-            ta: results[0].TAs
+            results_json.push({
+                profID: results[0].professors_id,
+                sec: results[0].Section,
+                name: results[0].CourseName,
+                prof: results[0].Professor,
+                rating: results[0].ProfessorRating,
+                diff: results[0].ProfessorDifficulty,
+                wta: results[0].Would_Take_Again,
+                prereq: results[0].Prereqs,
+                credits: results[0].Credits,
+                seat: results[0].seats,
+                chilly: results[0].ProfessorPopularity,
+                timeLoc: results[0].Location_and_Time,
+                reviews: reviews_json,
+                ta: results[0].TAs
+            });
+            // console.log(results);
+            // console.log(reviews_json);
+            // console.log(TAs_json);
+            // console.log(results_json);
+            res.render("reviewTable", {results: results_json});
         });
-        // console.log(results);
-        // console.log(reviews_json);
-        // console.log(TAs_json);
-        // console.log(results_json);
-        res.render("reviewTable", {results: results_json});
-    });
-    // console.log(classResult);
+        // console.log(classResult);
+    } else {
+        res.redirect('/');
+    }
 });
 
 app.post('/newReview', function(req, res) {
