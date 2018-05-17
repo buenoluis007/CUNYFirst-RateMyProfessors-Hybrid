@@ -61,7 +61,7 @@ CREATE TABLE section (
     FOREIGN KEY(professors_id) REFERENCES professors(professors_id)
 );
 -- Shopping Cart Table
-CREATE TABLE shoppingCart (
+CREATE TABLE enrolled (
     cart_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
     section_id INT NOT NULL,

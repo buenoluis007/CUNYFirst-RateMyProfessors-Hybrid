@@ -60,7 +60,7 @@ app.get("/loginPage",function(req,res){
 //Beginning of Shopping Cart
 app.get("/results/shoppingcart", function(req,res){
   console.log(ShoppingCart);
-  var q  = "SELECT * FROM section JOIN shoppingcart WHERE userID = " + signedInUser.userID ;
+  var q  = "SELECT * FROM section JOIN enrolled WHERE userID = " + signedInUser.userID ;
   connection.query(q,function(err,results){
       var ShoppingCart = [];
       res.render("shoppingcart",{ShoppingCart:ShoppingCart});
@@ -75,7 +75,7 @@ app.post("/addCourse",function(req,res){
       section_id: CourseAdd
   }
   // var q = "INSERT INTO shoppingcart(user_id,section_id) VALUES (" + signedInUser.userID+ " , " + CourseAdd + ")";
-  connection.query("INSERT INTO shoppingcart SET ?", addCourse, function(err,results){
+  connection.query("INSERT INTO enrolled SET ?", addCourse, function(err,results){
     if (err) throw err;
     console.log(results[0]);
   });
