@@ -59,30 +59,27 @@ app.get("/loginPage",function(req,res){
 
 //Beginning of Shopping Cart
 app.get("/results/shoppingcart", function(req,res){
-  var ShoppingCart = [];
-  res.render("shoppingcart",{ShoppingCart:ShoppingCart});
   console.log(ShoppingCart);
+  var q  = "SELECT * FROM section JOIN shoppingcart WHERE userID = " + signedInUser.userID ;
   connection.query(q,function(err,results){
-    // for(var i = 0; i < results.length; i++) {
-    //     if(results[i].Review === "No review up to date") {
-    //         reviews_json.push({profreview: results[i].Review});
-    //         break;
-    //     } else {
-    //         reviews_json.push({profreview: results[i].Review});
-    //     }
-    // }
+      var ShoppingCart = [];
+      res.render("shoppingcart",{ShoppingCart:ShoppingCart});
   });
 });
+
 app.post("/addCourse",function(req,res){
-  CourseAdd = req.body.addClass;
-  ShoppingCart.push(CourseAdd);
+  var CourseAdd = req.body.addClass;
   console.log(CourseAdd);
-  var q = "INSERT INTO shoppingCart(user_id,section_id) VALUES (" + signedInUser.userID+" , " + CourseAdd + ");"
-  connection.query(q,function(err,results){
+  var addCourse = {
+      user_id: signedInUser.userID,
+      section_id: CourseAdd
+  }
+  // var q = "INSERT INTO shoppingcart(user_id,section_id) VALUES (" + signedInUser.userID+ " , " + CourseAdd + ")";
+  connection.query("INSERT INTO shoppingcart SET ?", addCourse, function(err,results){
     if (err) throw err;
     console.log(results[0]);
   });
-  res.redirect("/results/shoppingcart");
+  res.redirect("/");
 });
 //End of Shopping cart
 
@@ -145,7 +142,7 @@ app.get('/results', function(req, res) {
                         name: result.CourseName,
                         prof: result.Professor,
                         ta: result.ta,
-                        timeLoc: result.Location_and_Time
+                        timeLoc: result.Location_and_Times
                     });
                 });
                 // Uses views/orders.ejs
