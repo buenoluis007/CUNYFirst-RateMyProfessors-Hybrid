@@ -247,7 +247,7 @@ app.post('/newReview', function(req, res) {
 });
 
 app.get('*', function(req, res) {
-    res.send("This is not a valid page on this website.")
+    res.redirect('/');
 });
 
 // Message for devs to see on localhost http://127.0.0.1:8080/
