@@ -230,9 +230,9 @@ app.post('/newReview', function(req, res) {
     } else {
         chillyNum = 2;
     }
-    var q = "call rateProf('"+profID+"','"+rating+"');"
-    var p = "call diffProf('"+profID+"','"+diff+"');"
-    var r = "call wtaProf('"+profID+"','"+wta+"')"
+    var q = "call rateProf("+profID+","+rating+");"
+    var p = "call diffProf("+profID+","+diff+");"
+    var r = "call wtaProf("+profID+","+wta+")"
     connection.query(q, function(err, results){
         if(err) throw err;
         console.log('rating updated');
