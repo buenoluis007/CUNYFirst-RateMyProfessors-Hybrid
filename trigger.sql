@@ -33,3 +33,17 @@ CREATE TRIGGER after_insert_enrolled
     END; $$
 
 DELIMITER ;
+
+-- Increase seats when someone drops the course
+DELIMITER $$
+DROP TRIGGER IF EXISTS after_delete_enrolled $$
+CREATE TRIGGER after_delete_enrolled
+    AFTER DELETE ON enrolled
+	FOR EACH ROW
+    BEGIN
+
+	UPDATE section SET seats = (seats + 1) WHERE section_id = OLD.section_id;
+
+    END; $$
+
+DELIMITER ;
