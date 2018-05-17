@@ -8,10 +8,6 @@ var app = express();
 app.use(Parser.urlencoded({extended: true}));
 // Will look for a file in local directory called "views" and for a file with ".ejs" at the end
 app.set("view engine", "ejs");
-<<<<<<< HEAD
-app.use(bodyParser.urlencoded({extended: true})); // Needed for post requests ie: submitting a form
-=======
->>>>>>> 66d72a17735d861777e468ea4bd61e145a872867
 app.use(express.static(__dirname + "/public")); // Use public folder to access css
 
 var connection = mysql.createConnection({
@@ -119,9 +115,9 @@ app.get('/results', function(req, res) {
     } else {
         // console.log(userResult);
         if (userResult == "All") {
-            q = "SELECT section.section_id, CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName, CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, building, times FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id";
+            q = "SELECT section.section_id AS 'Section', CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName AS 'CourseName', CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, CONCAT(building, ' ', room, ' ' , times) AS Location_and_Time FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id";
         } else {
-            q= "SELECT section.section_id, CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName, CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, building, times FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id WHERE courses.course_num = " + userResult;
+            q= "SELECT section.section_id AS 'Section', CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName AS 'CourseName', CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, CONCAT(building, ' ', room, ' ' , times) AS Location_and_Time FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id WHERE courses.course_num = " + userResult;
         }
 
         if (checkInp(userResult)) {
@@ -130,11 +126,11 @@ app.get('/results', function(req, res) {
                 var results_json = [];
                 results.forEach(function(result) {
                     results_json.push({
-                        sec: result.section,
+                        sec: result.Section,
                         num: result.COURSE,
-                        name: result.courseName,
+                        name: result.CourseName,
                         prof: result.Professor,
-                        rating: result.Professor_Rating,
+                        ta: result.ta,
                         timeLoc: result.Location_and_Time
                     });
                 });
@@ -155,43 +151,35 @@ app.get('/results', function(req, res) {
 
 app.get("/results/details", function(req, res) {
     var classResult = req.query.courseValue;
-    var r = 'SELECT section, CONCAT("CSc",course_num, " ",courseName) AS COURSE, CONCAT_WS(" ", prof_fname, prof_lname) AS Professor, IFNULL(CONCAT_WS(" ", ta_fname, ta_lname), "N/A") AS TA, CASE WHEN prof_rating = -1 THEN "N/A" ELSE prof_rating END AS Professor_Rating, CASE WHEN difficulty = -1 THEN "N/A" ELSE difficulty END AS Difficulty, CASE WHEN would_take_again = -1 THEN "N/A" ELSE would_take_again END AS Would_Take_Again, chilly_pepper AS Chilly_Pepper, review AS Review, prereqs, credits, seats, CONCAT_WS(", ", building, room, times) AS Location_and_Time FROM courses JOIN professors ON courses.professors_id = professors.id JOIN ratings ON ratings.professors_id = professors.id JOIN reviews ON reviews.professors_id = professors.id JOIN schedule ON courses.section = schedule.course_section LEFT JOIN TAs ON courses.section = TAs.course_section WHERE section = ' + classResult;
+    var r = "SELECT CONCAT_WS(' ', 'CSc', courses.course_num) AS 'CourseNumber', courseName AS 'CourseName', section.section_id AS 'Section', description AS 'CourseDescription', prereqs AS 'Prereqs', credits AS 'Credits', seats,CONCAT_WS(' ', prof_fname, prof_lname) AS 'Professor', ta AS 'TAs', CONCAT_WS(' ', building, room, times) AS 'Location_and_Time', times AS 'Dates', prof_rating AS 'ProfessorRating', difficulty AS 'ProfessorDifficulty', would_take_again AS 'Would_Take_Again', chilly_pepper AS 'ProfessorPopularity', reviews.review AS 'Reviews', section.professors_id FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON section.professors_id = professors.professors_id JOIN reviews ON reviews.professors_id = professors.professors_id WHERE section.section_id = " + classResult;
     connection.query(r, function(err, results) {
         if(err) throw err;
         // console.log(results);
         var reviews_json = [];
-        var TAs_json = [];
         var results_json = [];
         for(var i = 0; i < results.length; i++) {
-            if(results[i].Review === "No review up to date") {
-                reviews_json.push({profreview: results[i].Review});
+            if(results[i].Reviews === "No review up to date") {
+                reviews_json.push({profreview: results[i].Reviews});
                 break;
             } else {
-                reviews_json.push({profreview: results[i].Review});
-            }
-        }
-        for(var i = 0; i < results.length; i++) {
-            if(results[i].TA === "") {
-                TAs_json.push({tAssistant: results[i].TA});
-                break;
-            } else {
-                TAs_json.push({tAssistant: results[i].TA});
+                reviews_json.push({profreview: results[i].Reviews});
             }
         }
         results_json.push({
-            sec: results[0].section,
-            name: results[0].COURSE,
+            profID: results[0].professors_id,
+            sec: results[0].Section,
+            name: results[0].CourseName,
             prof: results[0].Professor,
-            rating: results[0].Professor_Rating,
-            diff: results[0].Difficulty,
+            rating: results[0].ProfessorRating,
+            diff: results[0].ProfessorDifficulty,
             wta: results[0].Would_Take_Again,
-            prereq: results[0].prereqs,
-            credits: results[0].credits,
+            prereq: results[0].Prereqs,
+            credits: results[0].Credits,
             seat: results[0].seats,
-            chilly: results[0].Chilly_Pepper,
+            chilly: results[0].ProfessorPopularity,
             timeLoc: results[0].Location_and_Time,
             reviews: reviews_json,
-            ta: TAs_json
+            ta: results[0].TAs
         });
         // console.log(results);
         // console.log(reviews_json);
@@ -202,7 +190,46 @@ app.get("/results/details", function(req, res) {
     // console.log(classResult);
 });
 
-
+app.post('/newReview', function(req, res) {
+    var profID = req.body.id;
+    var rating = req.body.rating;
+    var diff = req.body.diff;
+    var wta = req.body.wta;
+    var chilly = req.body.chilly;
+    var chillyNum;
+    var review = req.body.review;
+    var newReview = {
+            professors_id: profID,
+            chilly_pepper: chilly,
+            review: newReview
+    };
+    if(chilly === 'Not Hot') {
+        chillyNum = 0;
+    } else if(chilly === 'Is Hot') {
+        chillyNum = 1;
+    } else {
+        chillyNum = 2;
+    }
+    var q = "call rateProf('"+profID+"','"+rating+"');"
+    var p = "call diffProf('"+profID+"','"+diff+"');"
+    var r = "call wtaProf('"+profID+"','"+wta+"')"
+    connection.query(q, function(err, results){
+        if(err) throw err;
+        console.log('rating updated');
+    });
+    connection.query(p, function(err, results){
+        if(err) throw err;
+        console.log('difficulty updated');
+    });
+    connection.query(r, function(err, results){
+        if(err) throw err;
+        console.log('wta updated');
+    });
+    connection.query("INSERT INTO reviews SET ?", newReview, function(err, results) {
+        if (err) throw err;
+        console.log("review submitted");
+    });
+});
 
 app.get('*', function(req, res) {
     res.send("This is not a valid page on this website.")
