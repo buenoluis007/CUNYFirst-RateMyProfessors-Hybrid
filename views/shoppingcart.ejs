@@ -1,16 +1,17 @@
 <% include partials/header %>
+
 <div class = "container">
         <div class = "container">
           <h1 style = "text-align: center; background: transparent; color: white; font-size:50px;">Your Shopping Cart</h1>
         </div>
 </div>
-
-<div class = "row text-center">
-  <% ShoppingCart.forEach(function(cart){ %>
-    <div class = "col-md-3 col-sm-6">
-        <li class="list-group-item"><%= cart %></li>
-    </div>
-  <% }); %>
-</div>
-
+<form action = "/results/shoppingcart" method="post">
+  <div class = "row text-center">
+    <% ShoppingCart.forEach(function(cart){ %>
+      <div class = "col-md-3 col-sm-6">
+          <li class="list-group-item"><%= cart %></li>
+      </div>
+    <% }); %>
+  </div>
+</form>
 <% include partials/footer %>

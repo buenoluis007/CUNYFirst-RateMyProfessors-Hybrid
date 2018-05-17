@@ -19,10 +19,12 @@
                   <th>Professor</th>
                   <th>TA</th>
                   <th>Location and Time</th>
+                  <th>Add course</th>
                   <!-- <th>Chilly Pepper</th> -->
                 </tr>
             </thead>
             <tbody>
+
                 <% for(var i = 0; i<results.length;i++) {%>
                 <tr id="<%= results[i].sec %>">
                   <td>
@@ -55,10 +57,12 @@
                           <button class="buttons" type="submit" name="courseValue" value="<%= results[i].sec %>">  <%= results[i].timeLoc %> </button>
                       </form>
                   </td>
-                  <form action="/addCourse" method = "post">
-                      <!-- <input id = "AddID" class = "buttons" type="text" name="addClass" placeholder = "Enter Course Num"> -->
-                      <button id = "AddID" class = "buttons" name="addClass" value="<%= results[i].num %>">Add</button>
+                  <td>
+                    <form action="/addCourse" method = "post">
+                        <!-- <input id = "AddID" class = "buttons" type="text" name="addClass" placeholder = "Enter Course Num"> -->
+                        <button id = "AddID" class = "buttons" name="addClass" value="<%= results[i].sec %>">Add</button>
                     </form>
+                  </td>
                 </tr> <% } %>
             </tbody>
         </table>
