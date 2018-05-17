@@ -1,4 +1,4 @@
-// The Select Squad Project 1
+// The Select Squad Project 2
 // Need to npm install --save express, mysql, ejs, and body-parser
 var express = require('express');
 var mysql = require('mysql');
