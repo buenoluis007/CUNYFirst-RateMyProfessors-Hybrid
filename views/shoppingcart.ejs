@@ -5,17 +5,17 @@
           <h1 style = "text-align: center; background: transparent; color: white; font-size:50px;">Your Shopping Cart</h1>
         </div>
 </div>
-<form action = "/results/shoppingcart" method="post">
   <div class = "row text-center">
     <% for(var i =0; i < ShoppingCart.length; i++){ %>
         <div class = "col-md-3 col-sm-6">
             <li class="list-group-item"><%= ShoppingCart[i].section_id %></li>
             <li class="list-group-item"><%= ShoppingCart[i].course_num %></li>
             <li class="list-group-item"><%= ShoppingCart[i].building %></li>
-            <li class="list-group-item"><button name="RemoveButton">Remove Class</button></li>
+            <form class="" action="/RemoveButton" method="post">
+                <li class="list-group-item"><button name="RemoveButton" value="<%= ShoppingCart[i].section_id %>">Remove Class</button></li>
+            </form>
             <br>
         </div>
     <% } %>
   </div>
-</form>
 <% include partials/footer %>

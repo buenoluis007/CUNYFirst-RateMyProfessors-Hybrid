@@ -61,23 +61,40 @@ app.get("/loginPage",function(req,res){
 app.get("/results/shoppingcart", function(req,res){
   var q  = "SELECT * FROM section JOIN enrolled WHERE section.section_id = enrolled.section_id AND user_id = " + signedInUser.userID ;
   connection.query(q,function(err,results){
-      console.log(results)
       var ShoppingCart = results;
       res.render("shoppingcart",{ShoppingCart:ShoppingCart});
   });
 });
 
+app.post("/RemoveButton",function(req,res){
+    var section_id = req.body.RemoveButton;
+    console.log(section_id);
+    var q = "DELETE FROM enrolled WHERE section_id = " + section_id;
+    connection.query(q,function(err,results){
+        if(err) throw err;
+
+    });
+     res.redirect(req.get('referer'));
+});
+
 app.post("/addCourse",function(req,res){
   var CourseAdd = req.body.addClass;
   console.log(CourseAdd);
-  var addCourse = {
-      user_id: signedInUser.userID,
-      section_id: CourseAdd
-  }
-  // var q = "INSERT INTO shoppingcart(user_id,section_id) VALUES (" + signedInUser.userID+ " , " + CourseAdd + ")";
-  connection.query("INSERT INTO enrolled SET ?", addCourse, function(err,results){
-    if (err) throw err;
-    console.log(results[0]);
+  var q = "SELECT * FROM enrolled WHERE section_id = " + CourseAdd + " AND user_id = " + signedInUser.userID;
+  connection.query(q, function(req,res){
+      if(result[0]){
+
+      }else{
+          var addCourse = {
+              user_id: signedInUser.userID,
+              section_id: CourseAdd
+      }
+      // var q = "INSERT INTO shoppingcart(user_id,section_id) VALUES (" + signedInUser.userID+ " , " + CourseAdd + ")";
+          connection.query("INSERT INTO enrolled SET ?", addCourse, function(err,results){
+            if (err) throw err;
+            console.log(results[0]);
+          });
+      }
   });
   res.redirect(req.get('referer'));
 });
