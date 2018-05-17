@@ -245,7 +245,8 @@ INSERT INTO users(username, password) VALUES
 ('bigev01', 'cool'),
 ('buenoluis001', 'mvsl'),
 ('omarelnagdy', 'oe1'),
-('awang001', 'pw123');
+('awang001', 'pw123'),
+('JCisAwesome', 'SQLGod');
 
 -- Data for Sections
 INSERT INTO section (course_num, professors_id, building, room, times, ta)
