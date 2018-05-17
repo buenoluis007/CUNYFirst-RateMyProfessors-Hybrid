@@ -245,38 +245,43 @@ app.post('/newReview', function(req, res) {
     var chilly = req.body.chilly;
     var chillyNum;
     var review = req.body.review;
-    var newReview = {
-            professors_id: profID,
-            chilly_pepper: chilly,
-            review: review
-    };
-    if(chilly === 'Not Hot') {
-        chillyNum = 0;
-    } else if(chilly === 'Is Hot') {
-        chillyNum = 1;
+    if(wta) {
+        var newReview = {
+                professors_id: profID,
+                chilly_pepper: chilly,
+                review: review
+        };
+        if(chilly === 'Not Hot') {
+            chillyNum = 0;
+        } else if(chilly === 'Is Hot') {
+            chillyNum = 1;
+        } else {
+            chillyNum = 2;
+        }
+        var q = "call rateProf("+profID+","+rating+");"
+        var p = "call diffProf("+profID+","+diff+");"
+        var r = "call wtaProf("+profID+","+wta+")"
+        connection.query(q, function(err, results){
+            if(err) throw err;
+            console.log('rating updated');
+        });
+        connection.query(p, function(err, results){
+            if(err) throw err;
+            console.log('difficulty updated');
+        });
+        connection.query(r, function(err, results){
+            if(err) throw err;
+            console.log('wta updated');
+        });
+        connection.query("INSERT INTO reviews SET ?", newReview, function(err, results) {
+            if (err) throw err;
+            console.log("review submitted");
+        });
+        res.redirect('back');
     } else {
-        chillyNum = 2;
+        res.redirect('back');
     }
-    var q = "call rateProf("+profID+","+rating+");"
-    var p = "call diffProf("+profID+","+diff+");"
-    var r = "call wtaProf("+profID+","+wta+")"
-    connection.query(q, function(err, results){
-        if(err) throw err;
-        console.log('rating updated');
-    });
-    connection.query(p, function(err, results){
-        if(err) throw err;
-        console.log('difficulty updated');
-    });
-    connection.query(r, function(err, results){
-        if(err) throw err;
-        console.log('wta updated');
-    });
-    connection.query("INSERT INTO reviews SET ?", newReview, function(err, results) {
-        if (err) throw err;
-        console.log("review submitted");
-    });
-    res.redirect('back');
+
 });
 
 app.get('*', function(req, res) {
