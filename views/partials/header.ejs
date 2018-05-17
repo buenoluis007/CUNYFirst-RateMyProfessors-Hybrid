@@ -2,22 +2,28 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Shopping Cart</title>
+    <title>Select First</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
   <body background="https://www.darsnevesht.com/wp-content/uploads/2017/06/gosaste-zarrabi-payanterm.jpg">
-      <nav class = "navbar navbar-default">
-          <div class = "container-fluid">
-            <div class = "navbar-header">
-                <a class = "navbar-brand" href = "/">SelectFirst</a>
-            </div>
-            <div class = "collapse navbar-collapse">
-              <ul class = "nav navbar-nav navbar-right">
-                  <li><form action='/signout' method='POST' >
-                      <button type="submit" name="button">Sign Out</button>
-                  </form></li>
-                <li><a name = "/View" href = "/results/shoppingcart">View Shopping Cart</a></li>
-              </ul>
-            </div>
+    <nav class = "navbar navbar-default">
+        <div class = "container-fluid">
+          <div class = "navbar-header">
+              <a class = "navbar-brand" href = "/">SelectFirst</a>
           </div>
-        </nav>
+          <div class = "collapse navbar-collapse">
+            <ul class = "nav navbar-nav navbar-right">
+              <li>
+                <form action='/signout' method='POST'>
+                    <li><button type="submit" name="button" style = "border: none; margin-top:14px; background: inherit; color: grey;">Sign Out</button></li>
+                </form>
+              </li>
+              <li>
+                <a name = "/View" href = "/results/shoppingcart">
+                  View Enrolled Courses
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
