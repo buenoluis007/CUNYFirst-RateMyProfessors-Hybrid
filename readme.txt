@@ -26,4 +26,19 @@ Members:
 
 7) Play around with the website! Mess around with the search feature, and click around on the results page. It's perfectly normal to have the front page refresh if you put an invalid input as it's programmed to do so (the terminal leaves a message for an incorrect input). To go back a page, you can use your browsers "Go Back One Page" button.
 
+==========Triggers==========
+
+1) before_insert_enrolled: this trigger checks if the course you're trying to enroll into has at least a spot available, if so, you can enroll. Else, you can't.
+
+2) after_insert_enrolled: this trigger decreases the seats available for a class by 1 after someone enrolls in it.
+
+3) after_delete_enrolled: after someone drops the course, the seat count will increase by 1.
+
+==========Stored Procedures==========
+1) rateProf: takes professors_id and a new rating as the input, then it will average out the professor's rating to account for the new rating.
+
+2) diffProf: does the same thing as rateProf, but for the difficulty of the professor.
+
+3) wtaProf: does the same thing as rateProf and diffProf, but for the would take again attribute of the professor.
+
 If you have any questions, feel free to email any of the members of The Select Squad.
