@@ -28,13 +28,13 @@ CREATE TABLE professors (
 CREATE TABLE reviews (
     review_id INT PRIMARY KEY AUTO_INCREMENT,
     professors_id int(11) NOT NULL,
-    prof_rating decimal(2,1),
-    difficulty decimal(2,1),
+    prof_rating decimal(20,1),
+    difficulty decimal(6,1),
     chilly_pepper varchar(7),
-    would_take_again int(11),
+    would_take_again decimal(6,1),
     review varchar(1000),
     created date,
-    numberOfRating INT NOT NULL DEFAULT 8,
+    numberOfRating INT NOT NULL DEFAULT 3,
     FOREIGN KEY(professors_id) REFERENCES professors(professors_id)
 );
 
@@ -60,9 +60,9 @@ CREATE TABLE section (
     FOREIGN KEY(course_num) REFERENCES courses(course_num),
     FOREIGN KEY(professors_id) REFERENCES professors(professors_id)
 );
+
 -- Shopping Cart Table
 CREATE TABLE enrolled (
-    cart_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
     section_id INT NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(users_id),
@@ -251,8 +251,8 @@ INSERT INTO users(username, password) VALUES
 INSERT INTO section (course_num, professors_id, building, room, times, ta)
 VALUES  (10300, 1, 'Marshak', 'MR4, NAC 7/117', 'TuesThur 11:00am-11:50am, Fri 9:00am-10:40am','Bin Mu'),
         (10300, 2, 'Marshak', 'MR4, NAC 7/107', 'MonWe 11:00am-11:50am.Fri 9:00am-10:40am','Amir Mohsen'),
-        (10400, 3, 'NAC,Sheapard', '4/220C, S-209', 'MonWe 9:00am-10:40am,We 12:00pm,1:40pm','Siyu Liao'),
-        (10400, 4, 'Sheapard,Marshak', 'S-210,417N', 'MonWe 4:00pm-5:40pm,We 9:00am,10:40pm','Nihal Vatandas'),
+        (10400, 3, 'NAC,Shepard', '4/220C, S-209', 'MonWe 9:00am-10:40am,We 12:00pm,1:40pm','Siyu Liao'),
+        (10400, 4, 'Shepard,Marshak', 'S-210,417N', 'MonWe 4:00pm-5:40pm,We 9:00am,10:40pm','Nihal Vatandas'),
         (10400, 5, 'NAC', '6/115', 'TuesThurs 2:00pm-3:40pm,Fri 1:00pm,2:40pm','Chi-Him Liu'),
         (11300, 6, 'Shepard', 'S-209', 'Tues 9:30am-10:45am', 'None'),
         (21000, 4, 'NAC', '7/231', 'MonWed 11:00am-12:15pm', 'None'),

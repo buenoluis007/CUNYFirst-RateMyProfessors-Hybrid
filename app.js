@@ -142,7 +142,10 @@ app.get('/results', function(req, res) {
                         name: result.CourseName,
                         prof: result.Professor,
                         ta: result.ta,
+
+
                         timeLoc: result.Location_and_Times
+
                     });
                 });
                 // Uses views/orders.ejs
@@ -162,30 +165,26 @@ app.get('/results', function(req, res) {
 
 app.get("/results/details", function(req, res) {
     var classResult = req.query.courseValue;
+
     var r = "SELECT CONCAT_WS(' ', 'CSc', courses.course_num) AS 'CourseNumber', courseName AS 'CourseName', section.section_id AS 'Section', description AS 'CourseDescription', prereqs AS 'Prereqs', credits AS 'Credits', seats,CONCAT_WS(' ', prof_fname, prof_lname) AS 'Professor', ta AS 'TAs', CONCAT_WS(' ', building, room, times) AS 'Location_and_Time', times AS 'Dates', prof_rating AS 'ProfessorRating', difficulty AS 'ProfessorDifficulty', would_take_again AS 'Would_Take_Again', chilly_pepper AS 'ProfessorPopularity', reviews.review AS 'Reviews' FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON section.professors_id = professors.professors_id JOIN reviews ON reviews.professors_id = professors.professors_id WHERE section.section_id = " + classResult;
+
     connection.query(r, function(err, results) {
         if(err) throw err;
         // console.log(results);
         var reviews_json = [];
-        var TAs_json = [];
         var results_json = [];
         for(var i = 0; i < results.length; i++) {
-            if(results[i].Review === "No review up to date") {
-                reviews_json.push({profreview: results[i].Review});
+            if(results[i].Reviews === "No review up to date") {
+                reviews_json.push({profreview: results[i].Reviews});
                 break;
             } else {
-                reviews_json.push({profreview: results[i].Review});
-            }
-        }
-        for(var i = 0; i < results.length; i++) {
-            if(results[i].TA === "None") {
-                TAs_json.push({tAssistant: results[i].TA});
-                break;
-            } else {
-                TAs_json.push({tAssistant: results[i].TA});
+
+                reviews_json.push({profreview: results[i].Reviews});
             }
         }
         results_json.push({
+            profID: results[0].professors_id,
+
             sec: results[0].Section,
             name: results[0].CourseName,
             prof: results[0].Professor,
@@ -197,7 +196,9 @@ app.get("/results/details", function(req, res) {
             seat: results[0].seats,
             chilly: results[0].ProfessorPopularity,
             timeLoc: results[0].Location_and_Time,
-            reviews: results[0].Reviews,
+
+            reviews: reviews_json,
+
             ta: results[0].TAs
         });
         // console.log(results);
@@ -209,7 +210,46 @@ app.get("/results/details", function(req, res) {
     // console.log(classResult);
 });
 
-
+app.post('/newReview', function(req, res) {
+    var profID = req.body.id;
+    var rating = req.body.rating;
+    var diff = req.body.diff;
+    var wta = req.body.wta;
+    var chilly = req.body.chilly;
+    var chillyNum;
+    var review = req.body.review;
+    var newReview = {
+            professors_id: profID,
+            chilly_pepper: chilly,
+            review: newReview
+    };
+    if(chilly === 'Not Hot') {
+        chillyNum = 0;
+    } else if(chilly === 'Is Hot') {
+        chillyNum = 1;
+    } else {
+        chillyNum = 2;
+    }
+    var q = "call rateProf('"+profID+"','"+rating+"');"
+    var p = "call diffProf('"+profID+"','"+diff+"');"
+    var r = "call wtaProf('"+profID+"','"+wta+"')"
+    connection.query(q, function(err, results){
+        if(err) throw err;
+        console.log('rating updated');
+    });
+    connection.query(p, function(err, results){
+        if(err) throw err;
+        console.log('difficulty updated');
+    });
+    connection.query(r, function(err, results){
+        if(err) throw err;
+        console.log('wta updated');
+    });
+    connection.query("INSERT INTO reviews SET ?", newReview, function(err, results) {
+        if (err) throw err;
+        console.log("review submitted");
+    });
+});
 
 app.get('*', function(req, res) {
     res.send("This is not a valid page on this website.")
