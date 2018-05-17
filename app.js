@@ -79,7 +79,7 @@ app.post("/addCourse",function(req,res){
     if (err) throw err;
     console.log(results[0]);
   });
-  res.redirect("/");
+  res.redirect(req.get('referer'));
 });
 //End of Shopping cart
 
