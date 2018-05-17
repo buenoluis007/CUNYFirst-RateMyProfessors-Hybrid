@@ -27,3 +27,7 @@ body {
     /* position:absolute; */
     bottom:0;
     color: rgb(0,0,50);
+
+p {
+  color:white;
+}
