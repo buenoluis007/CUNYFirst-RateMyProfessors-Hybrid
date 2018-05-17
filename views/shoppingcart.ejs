@@ -9,9 +9,11 @@
   <div class = "row text-center">
     <% for(var i =0; i < ShoppingCart.length; i++){ %>
         <div class = "col-md-3 col-sm-6">
-            <li class="list-group-item"><%= ShoppingCart[i].section_id %></li>
-            <li class="list-group-item"><%= ShoppingCart[i].course_num %></li>
-            <li class="list-group-item"><%= ShoppingCart[i].building %></li>
+            <li class="list-group-item">Section Id:<%= ShoppingCart[i].section_id %></li>
+            <li class="list-group-item">Class Name:<%= ShoppingCart[i].course_num %></li>
+            <li class="list-group-item">Location:<%= ShoppingCart[i].building %></li>
+            <li class="list-group-item"><button name="RemoveButton">Remove Class</button></li>
+            <br>
         </div>
     <% } %>
   </div>
