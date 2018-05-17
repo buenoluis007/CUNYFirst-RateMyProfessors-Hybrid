@@ -1,4 +1,4 @@
-CSc33600 Project #1
+CSc33600 Project #2
 Professor: John Connor
 
 CUNYFirst/RateMyProfessors Hybrid brought to you by: The Select Squad
