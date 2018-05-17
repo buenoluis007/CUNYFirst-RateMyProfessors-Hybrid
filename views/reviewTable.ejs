@@ -51,6 +51,11 @@
 
       </tr>
       <tr>
+        <th class = "vl">Seats </th>
+        <td><%= results[0].seat %></td>
+
+      </tr>
+      <tr>
         <th class = "vl">Time and Location </th>
         <td> <%= results[0].timeLoc %> </td>
 
@@ -90,9 +95,9 @@
         <th class = "vl">Reviews</th>
         <td>
             <table>
-                <% for(var i = 0; i < 4; i++) {%>
+                <% for(var i = results[0].reviews.length-1; i >= 0; i--) {%>
                     <% if(results[0].reviews[i]){ %>
-                        <% if(results[0].reviews[i].profreview && i+1 < 5  && results[0].reviews[i].profreview != "No review up to date"){ %>
+                        <% if(results[0].reviews[i].profreview && i-1 >= 0 && results[0].reviews[i].profreview != "No review up to date"){ %>
                             <tr><%= results[0].reviews[i].profreview %></tr>
                             <hr>
                         <% } else if(results[0].reviews[i].profreview) { %>
@@ -114,7 +119,7 @@
 <form action="/newReview" method="post">
     <label for="rating">Rating: </label>
     <select class="" name="rating">
-        <option>1</option>
+        <option selected>1</option>
         <option>2</option>
         <option>3</option>
         <option>4</option>
@@ -122,7 +127,7 @@
     </select>
     <label for="diff">Difficulty: </label>
     <select class="" name="diff">
-        <option>1</option>
+        <option selected>1</option>
         <option>2</option>
         <option>3</option>
         <option>4</option>
@@ -130,7 +135,7 @@
     </select>
     <label for="chilly">Chilly Pepper: </label>
     <select class="" name="chilly">
-        <option>Not Hot</option>
+        <option selected>Not Hot</option>
         <option>Is Hot</option>
         <option>Sexy</option>
     </select>
