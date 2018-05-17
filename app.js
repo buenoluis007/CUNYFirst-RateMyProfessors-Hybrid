@@ -126,7 +126,7 @@ app.get('/results', function(req, res) {
     } else {
         // console.log(userResult);
         if (userResult == "All") {
-            q = "SELECT section.section_id AS 'Section', CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName AS 'CourseName', CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, CONCAT_WS(' ',building, room, times) AS Location_and_Time FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id";
+            q = "SELECT section.section_id AS 'Section', CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName AS 'CourseName', CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, CONCAT(building, ' ', room, ' ' , times) AS Location_and_Time FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id";
         } else {
             q= "SELECT section.section_id AS 'Section', CONCAT('CSc', courses.course_num) AS COURSE, courses.courseName AS 'CourseName', CONCAT_WS(' ', prof_fname, prof_lname) AS Professor, ta, CONCAT(building, ' ', room, ' ' , times) AS Location_and_Time FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON professors.professors_id = section.professors_id WHERE courses.course_num = " + userResult;
         }
@@ -142,7 +142,10 @@ app.get('/results', function(req, res) {
                         name: result.CourseName,
                         prof: result.Professor,
                         ta: result.ta,
-                        timeLoc: result.Location_and_Time
+
+
+                        timeLoc: result.Location_and_Times
+
                     });
                 });
                 // Uses views/orders.ejs
@@ -163,7 +166,7 @@ app.get('/results', function(req, res) {
 app.get("/results/details", function(req, res) {
     var classResult = req.query.courseValue;
 
-    var r = "SELECT CONCAT_WS(' ', 'CSc', courses.course_num) AS 'CourseNumber', courseName AS 'CourseName', section.section_id AS 'Section', description AS 'CourseDescription', prereqs AS 'Prereqs', credits AS 'Credits', seats,CONCAT_WS(' ', prof_fname, prof_lname) AS 'Professor', ta AS 'TAs', CONCAT_WS(' ', building, room, times) AS 'Location_and_Time', prof_rating AS 'ProfessorRating', difficulty AS 'ProfessorDifficulty', would_take_again AS 'Would_Take_Again', chilly_pepper AS 'ProfessorPopularity', reviews.review AS 'Reviews', professors.professors_id AS 'professors_id' FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON section.professors_id = professors.professors_id JOIN reviews ON reviews.professors_id = professors.professors_id WHERE section.section_id = " + classResult;
+    var r = "SELECT CONCAT_WS(' ', 'CSc', courses.course_num) AS 'CourseNumber', courseName AS 'CourseName', section.section_id AS 'Section', description AS 'CourseDescription', prereqs AS 'Prereqs', credits AS 'Credits', seats,CONCAT_WS(' ', prof_fname, prof_lname) AS 'Professor', ta AS 'TAs', CONCAT_WS(' ', building, room, times) AS 'Location_and_Time', times AS 'Dates', prof_rating AS 'ProfessorRating', difficulty AS 'ProfessorDifficulty', would_take_again AS 'Would_Take_Again', chilly_pepper AS 'ProfessorPopularity', reviews.review AS 'Reviews' FROM section JOIN courses ON section.course_num = courses.course_num JOIN professors ON section.professors_id = professors.professors_id JOIN reviews ON reviews.professors_id = professors.professors_id WHERE section.section_id = " + classResult;
 
     connection.query(r, function(err, results) {
         if(err) throw err;
@@ -181,6 +184,7 @@ app.get("/results/details", function(req, res) {
         }
         results_json.push({
             profID: results[0].professors_id,
+
             sec: results[0].Section,
             name: results[0].CourseName,
             prof: results[0].Professor,
@@ -192,7 +196,9 @@ app.get("/results/details", function(req, res) {
             seat: results[0].seats,
             chilly: results[0].ProfessorPopularity,
             timeLoc: results[0].Location_and_Time,
+
             reviews: reviews_json,
+
             ta: results[0].TAs
         });
         // console.log(results);
@@ -206,7 +212,6 @@ app.get("/results/details", function(req, res) {
 
 app.post('/newReview', function(req, res) {
     var profID = req.body.id;
-    console.log("profID: " + profID);
     var rating = req.body.rating;
     var diff = req.body.diff;
     var wta = req.body.wta;
@@ -216,7 +221,7 @@ app.post('/newReview', function(req, res) {
     var newReview = {
             professors_id: profID,
             chilly_pepper: chilly,
-            review: review
+            review: newReview
     };
     if(chilly === 'Not Hot') {
         chillyNum = 0;
@@ -225,9 +230,9 @@ app.post('/newReview', function(req, res) {
     } else {
         chillyNum = 2;
     }
-    var q = "call rateProf("+profID+","+rating+");"
-    var p = "call diffProf("+profID+","+diff+");"
-    var r = "call wtaProf("+profID+","+wta+");"
+    var q = "call rateProf('"+profID+"','"+rating+"');"
+    var p = "call diffProf('"+profID+"','"+diff+"');"
+    var r = "call wtaProf('"+profID+"','"+wta+"')"
     connection.query(q, function(err, results){
         if(err) throw err;
         console.log('rating updated');
@@ -244,7 +249,6 @@ app.post('/newReview', function(req, res) {
         if (err) throw err;
         console.log("review submitted");
     });
-    res.redirect('back');
 });
 
 app.get('*', function(req, res) {
