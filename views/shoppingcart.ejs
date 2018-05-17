@@ -12,7 +12,9 @@
             <li class="list-group-item"><%= ShoppingCart[i].section_id %></li>
             <li class="list-group-item"><%= ShoppingCart[i].course_num %></li>
             <li class="list-group-item"><%= ShoppingCart[i].building %></li>
-            <li class="list-group-item"><button name="RemoveButton">Remove Class</button></li>
+            <form class="" action="/RemoveButton" method="post">
+                <li class="list-group-item"><button name="RemoveButton" value="<%= ShoppingCart[i].section_id %>">Remove Class</button></li>
+            </form>
             <br>
         </div>
     <% } %>
