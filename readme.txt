@@ -14,7 +14,7 @@ Members:
 
 1) Make sure your terminal is in the same directory as this readme.txt file.
 
-2) Open mysql on your terminal and run 'source db.sql'
+2) Open mysql on your terminal and run 'source db.sql', 'source procedure.sql', source trigger.sql;'
 
 3) Open "app.js" in your preferred text editor. On lines 13-18, edit the code to the information you use to login to your personal mysql database. You probably only need to change the password as everything else should be correct.
 
