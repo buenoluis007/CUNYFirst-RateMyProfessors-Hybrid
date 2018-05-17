@@ -59,10 +59,10 @@ app.get("/loginPage",function(req,res){
 
 //Beginning of Shopping Cart
 app.get("/results/shoppingcart", function(req,res){
-  console.log(ShoppingCart);
-  var q  = "SELECT * FROM section JOIN enrolled WHERE userID = " + signedInUser.userID ;
+  var q  = "SELECT * FROM section JOIN enrolled WHERE section.section_id = enrolled.section_id AND user_id = " + signedInUser.userID ;
   connection.query(q,function(err,results){
-      var ShoppingCart = [];
+      console.log(results)
+      var ShoppingCart = results;
       res.render("shoppingcart",{ShoppingCart:ShoppingCart});
   });
 });

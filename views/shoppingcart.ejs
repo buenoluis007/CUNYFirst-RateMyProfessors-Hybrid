@@ -7,11 +7,13 @@
 </div>
 <form action = "/results/shoppingcart" method="post">
   <div class = "row text-center">
-    <% ShoppingCart.forEach(function(cart){ %>
-      <div class = "col-md-3 col-sm-6">
-          <li class="list-group-item"><%= cart %></li>
-      </div>
-    <% }); %>
+    <% for(var i =0; i < ShoppingCart.length; i++){ %>
+        <div class = "col-md-3 col-sm-6">
+            <li class="list-group-item"><%= ShoppingCart[i].section_id %></li>
+            <li class="list-group-item"><%= ShoppingCart[i].course_num %></li>
+            <li class="list-group-item"><%= ShoppingCart[i].building %></li>
+        </div>
+    <% } %>
   </div>
 </form>
 <% include partials/footer %>
